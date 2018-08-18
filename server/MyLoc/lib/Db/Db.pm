@@ -47,6 +47,16 @@ sub create_table_users {
     }
 }
 
+sub insert_one_user {
+    print Dumper( \@_ );
+    my ( $username, $password, $name ) = @_;
+    my $id = get_next_id( 'USERS' );
+    my $stmt = qq(INSERT INTO USERS (ID, USERNAME, PASSWORD, NAME)
+                   VALUES ( ?, ?, ?, ?));
+   my $sth = $dbh->prepare( $stmt );
+    my $rv = $sth->execute($id, $username, $password, $name ) or die $DBI::errstr;
+}
+
 sub insert_into_users {
     my $stmt = qq(INSERT INTO USERS (ID, USERNAME, PASSWORD, NAME)
                    VALUES (1, 'pesho', 'pesho_pass', 'pesho peshev' ));
@@ -69,7 +79,7 @@ sub insert_into_users {
     print "Records created successfully\n";
 }
 
-sub print_users {
+sub fetch_users {
     my $stmt = qq(SELECT id, username, password, role, name from USERS;);
     my $sth = $dbh->prepare( $stmt );
     my $rv = $sth->execute() or die $DBI::errstr;
@@ -94,9 +104,10 @@ sub print_users {
 }
 
 sub get_one_users {
+    my $id = shift;
     my $stmt = qq(SELECT id, username, password, role, name from USERS where ID = ?;);
     my $sth = $dbh->prepare( $stmt );
-    my $rv = $sth->execute( 3 ) or die $DBI::errstr;
+    my $rv = $sth->execute( $id ) or die $DBI::errstr;
 
     if($rv < 0) {
        print $DBI::errstr;
@@ -118,10 +129,13 @@ sub get_one_users {
 }
 
 sub update_users {
+    my $id = shift;
+    my $role = shift;
+
     my $table = 'USERS';
     my $stmt = qq(UPDATE $table set ROLE = ? where ID= ?;);
     my $sth = $dbh->prepare( $stmt );
-    my $rv = $sth->execute( 'ADMIN', 1 ) or die $DBI::errstr;
+    my $rv = $sth->execute( $role, $id ) or die $DBI::errstr;
 
     if( $rv < 0 ) {
        print $DBI::errstr;
@@ -142,6 +156,25 @@ sub delete_from_users {
     } else {
        print "Rows deleted : $rv\n";
     }
+}
+
+sub get_next_id {
+    my $table = shift;
+    my $stmt = qq(SELECT id from $table order by id desc limit 1;);
+    my $sth = $dbh->prepare( $stmt );
+    my $rv = $sth->execute() or die $DBI::errstr;
+
+    if($rv < 0) {
+       print $DBI::errstr;
+    }
+
+    my $nxt_id;
+    while(my @row = $sth->fetchrow_array()) {
+        $nxt_id = $row[ 0 ];
+    }
+    $nxt_id++;
+    print "Operation done successfully\n";
+    return $nxt_id;
 }
 
 1;
