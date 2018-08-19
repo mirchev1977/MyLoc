@@ -11,11 +11,6 @@ class AllUsers extends Component {
     }
 
     componentDidMount () {
-        //this.setState( prevState => {
-        //    return { common: this.props.common };
-        //} );
-
-        //this.props.callMe( 'catalog' );
         let _this = this;
         $.ajax( {
             method: 'GET',
@@ -44,7 +39,7 @@ class AllUsers extends Component {
                 <DataField type="text" name="ROLE"     id={ u.ID } value={ u.ROLE     } onInputChange={ this.onInputChange } />
             </li> );
         return (
-            <div>
+            <div className="All">
                 <h1>All Users</h1>
                 <ul>
                     <div  className="closedDataField bold">USERNAME</div>
@@ -52,6 +47,7 @@ class AllUsers extends Component {
                     <div  className="closedDataField bold">ROLE</div>
                     { users }
                 </ul>
+                <span className="submitButton"><DataField type="submit" name="submit" value={ "Submit" } /></span>
             </div>
         );
     }

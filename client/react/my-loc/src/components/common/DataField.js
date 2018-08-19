@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import '../../App.css';
-import $ from 'jquery';
 
 class DataField extends Component {
     constructor ( props ) {

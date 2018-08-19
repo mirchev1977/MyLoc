@@ -28,6 +28,7 @@
     display: inline-block;
     padding: 5px;
     width: 200px;
+    cursor: pointer;
 }
 
 .openedDataField {
@@ -48,6 +49,33 @@ li {
 
 div {
     text-align: left;
+}
+
+.All {
+    position: relative;
+}
+
+.submitButton {
+    display: block;
+    text-align: right;
+    position: absolute;
+    right: -200px;
+    top: 40%;
+}
+
+.submitButton div {
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+}
+
+.changedRed {
+    background-color: red;
+}
+
+.unchangedGreen {
+    background-color: green;
 }
 
 @keyframes App-logo-spin {
