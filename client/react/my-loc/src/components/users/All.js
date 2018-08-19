@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import DataField from '../common/DataField.js';
 import $ from 'jquery';
 
 class AllUsers extends Component {
@@ -25,10 +26,8 @@ class AllUsers extends Component {
         } );
     }
 
-    onInputChange ( event ) {
-        let target = event.target;
-        let data = $(target).attr('data');
-        this.props.onInputChange( 'users', '_users', data, target.name, target.value );
+    onInputChange ( id, name, value ) {
+        this.props.onInputChange( 'users', '_users', id, name, value );
     }
 
     render () {
@@ -39,10 +38,9 @@ class AllUsers extends Component {
         }
         users = users.map( u => 
             <li key={ u.ID }>
-                <input type="text" name="USERNAME" data={ u.ID } value={ u.USERNAME } onChange={ this.onInputChange } /> 
-                <input type="text" name="PASSWORD" data={ u.ID } value={ u.PASSWORD } onChange={ this.onInputChange } /> 
-                <input type="text" name="NAME" data={ u.ID } value={ u.NAME } onChange={ this.onInputChange } /> 
-                <input type="text" name="ROLE" data={ u.ID } value={ u.ROLE } onChange={ this.onInputChange } /> 
+                <DataField type="text" name="USERNAME" id={ u.ID } value={ u.USERNAME } onInputChange={ this.onInputChange } />
+                <DataField type="text" name="PASSWORD" id={ u.ID } value={ u.PASSWORD } onInputChange={ this.onInputChange } />
+                <DataField type="text" name="ROLE"     id={ u.ID } value={ u.ROLE     } onInputChange={ this.onInputChange } />
             </li> );
         return (
             <div>
