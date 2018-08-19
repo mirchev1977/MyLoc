@@ -88,7 +88,7 @@ sub fetch_users {
        print $DBI::errstr;
     }
 
-    my @output = ();
+    my %output;
     while(my @row = $sth->fetchrow_array()) {
         my $hr = {
             ID => $row[ 0 ],
@@ -97,10 +97,10 @@ sub fetch_users {
             ROLE => $row[ 3 ],
             NAME => $row[ 4 ],
         };
-        push @output, $hr;
+        $output{ $hr->{ 'ID' } } = $hr;
     }
     print "Operation done successfully\n";
-    return \@output;
+    return \%output;
 }
 
 sub get_one_users {
@@ -113,7 +113,7 @@ sub get_one_users {
        print $DBI::errstr;
     }
 
-    my @output = ();
+    my %output;
     while(my @row = $sth->fetchrow_array()) {
         my $hr = {
             ID => $row[ 0 ],
@@ -122,10 +122,10 @@ sub get_one_users {
             ROLE => $row[ 3 ],
             NAME => $row[ 4 ],
         };
-        push @output, $hr;
+        $output{ $hr->{ 'ID' } } = $hr;
     }
     print "Operation done successfully\n";
-    return \@output;
+    return \%output;
 }
 
 sub update_users {

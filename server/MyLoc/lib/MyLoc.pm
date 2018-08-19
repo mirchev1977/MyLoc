@@ -23,6 +23,7 @@ get '/' => sub {
 get '/users/all' => sub {
     my $users = Db::Db::fetch_users();
 
+    header 'Access-Control-Allow-Origin' => '*';
     content_type 'application/json';
     return to_json $users;
 };
