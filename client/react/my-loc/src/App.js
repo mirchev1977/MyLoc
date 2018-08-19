@@ -8,7 +8,7 @@ class App extends Component {
     constructor ( props )  {
         super( props );
         this.state = {
-            users: { _users: {} },
+            users: { _users: { } },
         };
 
         this.update        = this.update.bind( this );

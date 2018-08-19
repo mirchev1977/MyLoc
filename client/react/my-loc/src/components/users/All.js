@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import DataField from '../common/DataField.js';
+import  '../../App.css';
 import $ from 'jquery';
 
 class AllUsers extends Component {
@@ -46,6 +47,9 @@ class AllUsers extends Component {
             <div>
                 <h1>All Users</h1>
                 <ul>
+                    <div  className="closedDataField bold">USERNAME</div>
+                    <div  className="closedDataField bold">PASSWORD</div>
+                    <div  className="closedDataField bold">ROLE</div>
                     { users }
                 </ul>
             </div>

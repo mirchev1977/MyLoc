@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  width: 50%;
+  margin: 0 auto;
 }
 
 .App-logo {
@@ -20,6 +22,32 @@
 
 .App-intro {
   font-size: large;
+}
+
+.closedDataField {
+    display: inline-block;
+    padding: 5px;
+    width: 200px;
+}
+
+.openedDataField {
+    width: 200px;
+    height: 30px;
+    background-color: #ffffb3;
+    min-height: 30px;
+    max-height: 30px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+li {
+    list-style: none;
+}
+
+div {
+    text-align: left;
 }
 
 @keyframes App-logo-spin {
