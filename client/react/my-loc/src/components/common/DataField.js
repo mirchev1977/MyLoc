@@ -24,6 +24,10 @@ class DataField extends Component {
     }
 
     openInputField ( event ) {
+        if ( this.props.name === 'submit' ) {
+            this.props.submitChanges();
+            return;
+        }
         this.setState( {
             opened: true,
         } );

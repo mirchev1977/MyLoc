@@ -7,7 +7,12 @@ class AllUsers extends Component {
     constructor ( props ) {
         super( props );
 
+        this.state = {
+            changed: false,
+        };
+
         this.onInputChange = this.onInputChange.bind( this );
+        this.submitChanges = this.submitChanges.bind( this );
     }
 
     componentDidMount () {
@@ -23,7 +28,16 @@ class AllUsers extends Component {
     }
 
     onInputChange ( id, name, value ) {
+        this.setState( {
+            changed: true,
+        } );
         this.props.onInputChange( 'users', '_users', id, name, value );
+    }
+
+    submitChanges () {
+        this.setState( {
+            changed: false,
+        } );
     }
 
     render () {
@@ -38,6 +52,13 @@ class AllUsers extends Component {
                 <DataField type="text" name="PASSWORD" id={ u.ID } value={ u.PASSWORD } onInputChange={ this.onInputChange } />
                 <DataField type="text" name="ROLE"     id={ u.ID } value={ u.ROLE     } onInputChange={ this.onInputChange } />
             </li> );
+
+        let submButton = "submitButton";
+        if ( this.state.changed ) {
+            submButton += ' changedRed';
+        } else {
+            submButton += ' unchangedGreen';
+        }
         return (
             <div className="All">
                 <h1>All Users</h1>
@@ -47,7 +68,8 @@ class AllUsers extends Component {
                     <div  className="closedDataField bold">ROLE</div>
                     { users }
                 </ul>
-                <span className="submitButton"><DataField type="submit" name="submit" value={ "Submit" } /></span>
+                <span className={ submButton }><DataField type="submit" name="submit" value={ "Submit" } 
+                    submitChanges={ this.submitChanges } /></span>
             </div>
         );
     }
