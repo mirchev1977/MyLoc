@@ -34,9 +34,13 @@ class AllUsers extends Component {
         this.props.onInputChange( 'users', '_users', id, name, value );
     }
 
-    submitChanges () {
-        this.setState( {
-            changed: false,
+    submitChanges ( component, property ) {
+        this.props.submitChanges( component, property, updated => {
+            if ( updated ) {
+                this.setState( {
+                    changed: false,
+                } );
+            }
         } );
     }
 
@@ -54,10 +58,13 @@ class AllUsers extends Component {
             </li> );
 
         let submButton = "submitButton";
+        let submButtonName;
         if ( this.state.changed ) {
             submButton += ' changedRed';
+            submButtonName = "Unsaved...";
         } else {
             submButton += ' unchangedGreen';
+            submButtonName = "Saved...";
         }
         return (
             <div className="All">
@@ -68,7 +75,7 @@ class AllUsers extends Component {
                     <div  className="closedDataField bold">ROLE</div>
                     { users }
                 </ul>
-                <span className={ submButton }><DataField type="submit" name="submit" value={ "Submit" } 
+                <span className={ submButton }><DataField type="submit" name="submit" value={ submButtonName } 
                     submitChanges={ this.submitChanges } /></span>
             </div>
         );

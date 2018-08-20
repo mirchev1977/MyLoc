@@ -47,7 +47,7 @@ get '/user/create/:username/:password/:name' => sub {
 get '/roll/update/:id/:role' => sub {
     my $id = route_parameters->get('id');
     my $role = route_parameters->get('role');
-    Db::Db::update_users( $id, $role );
+    Db::Db::update_users_role( $id, $role );
 
     content_type 'application/json';
     return to_json { $id => $role, message => 'successfully updated' };
@@ -58,6 +58,15 @@ get '/next/:tableName' => sub {
     my $next_id = Db::Db::get_next_id( $table_name );
     content_type 'application/json';
     "$next_id"
+};
+
+post '/users/update' => sub {
+    my $users = body_parameters->get('users');
+    Db::Db::update_users( $users );
+
+    header 'Access-Control-Allow-Origin' => '*';
+
+    return to_json { STATUS => "OK" };
 };
 
 true;

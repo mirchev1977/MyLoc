@@ -6,6 +6,7 @@ use warnings;
 use DBI;
 use DBD::SQLite;
 use Data::Dumper;
+use JSON;
 
 my $dbh;
 
@@ -128,7 +129,7 @@ sub get_one_users {
     return \%output;
 }
 
-sub update_users {
+sub update_users_role {
     my $id = shift;
     my $role = shift;
 
@@ -141,6 +142,28 @@ sub update_users {
        print $DBI::errstr;
     } else {
        print "Total number of rows updated : $rv\n";
+    }
+}
+
+sub update_users {
+    my $users_json = shift;
+    my $users =  decode_json( $users_json );
+
+    my $table = 'USERS';
+    eval {
+        for my $key ( keys %$users ) {
+            my $user = $users->{ $key };
+
+            my $stmt = qq(UPDATE $table set USERNAME = ?, PASSWORD = ?, NAME = ?, ROLE = ? where ID= ?;);
+            my $sth = $dbh->prepare( $stmt );
+
+            my $rv = $sth->execute( $user->{ 'USERNAME' }, $user->{ 'PASSWORD' }, $user->{ 'NAME' }, $user->{ 'ROLE' }, $user->{ 'ID' } ) 
+                or die $DBI::errstr;
+        }
+    };
+
+    if ( $@ ) {
+        `echo error: $@ >> miro_log`;
     }
 }
 
