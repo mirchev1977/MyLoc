@@ -14,10 +14,20 @@ class DataField extends Component {
     }
 
     onInputChange ( event ) {
-        this.props.onInputChange( this.props.id, this.props.name, event.target.value );
+        var val;
+        if ( event.target.options ) {
+            var selectedIndex = event.target.options.selectedIndex;
+            val = event.target.options[ selectedIndex ].value;
+            this.setState( {
+                opened: false,
+            } );
+        } else {
+            val = event.target.value;
+        }
+        this.props.onInputChange( this.props.id, this.props.name, val );
     }
 
-    closeInputField () {
+    closeInputField ( event ) {
         this.setState( {
             opened: false,
         } );
@@ -25,13 +35,16 @@ class DataField extends Component {
 
     openInputField ( event ) {
         if ( this.props.name === 'submit' ) {
+            this.setState( {
+                opened: false,
+            } );
+
             this.props.submitChanges( 'users', '_changed' );
             return;
         }
         this.setState( {
             opened: true,
         } );
-
     }
 
     render () {
@@ -47,9 +60,19 @@ class DataField extends Component {
                 onBlur={ this.closeInputField }
                 autoFocus
             />;
+
+            if ( this.props.type === 'select' ) {
+                let arr = [
+                    <option value='ADMIN' key="1">ADMIN</option>,
+                    <option value='USER' key="2">USER</option>,
+                ];
+                field = <select onChange={ this.onInputChange } onBlur={ this.closeInputField } value={ this.props.value }>
+                    {arr}
+                </select>
+            }
         } else {
             field = <div  className="closedDataField" onClick={ this.openInputField }>{ this.props.value }</div>
-        }
+        } 
         return (
             field
         );

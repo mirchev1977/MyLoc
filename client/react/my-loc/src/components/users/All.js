@@ -54,7 +54,7 @@ class AllUsers extends Component {
             <li key={ u.ID }>
                 <DataField type="text" name="USERNAME" id={ u.ID } value={ u.USERNAME } onInputChange={ this.onInputChange } />
                 <DataField type="text" name="PASSWORD" id={ u.ID } value={ u.PASSWORD } onInputChange={ this.onInputChange } />
-                <DataField type="text" name="ROLE"     id={ u.ID } value={ u.ROLE     } onInputChange={ this.onInputChange } />
+                <DataField type="select" name="ROLE"     id={ u.ID } value={ u.ROLE     } onInputChange={ this.onInputChange } />
             </li> );
 
         let submButton = "submitButton";
