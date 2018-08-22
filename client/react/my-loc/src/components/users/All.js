@@ -60,6 +60,7 @@ class AllUsers extends Component {
             <li key={ u.ID }>
                 <DataField type="text"   name="USERNAME" id={ u.ID } value={ u.USERNAME } onInputChange={ this.onInputChange } />
                 <DataField type="text"   name="PASSWORD" id={ u.ID } value={ u.PASSWORD } onInputChange={ this.onInputChange } />
+                <DataField type="text"   name="NAME"     id={ u.ID } value={ u.NAME     } onInputChange={ this.onInputChange } />
                 <DataField type="select" name="ROLE"     id={ u.ID } value={ u.ROLE     } onInputChange={ this.onInputChange } />
             </li> );
 
@@ -79,10 +80,12 @@ class AllUsers extends Component {
                 <ul>
                     <div  className="closedDataField bold">USERNAME</div>
                     <div  className="closedDataField bold">PASSWORD</div>
+                    <div  className="closedDataField bold">NAME</div>
                     <div  className="closedDataField bold">ROLE</div>
                     <li>
                     <DataField type="text"   name="USERNAME" id={ nu.ID } value={ nu.USERNAME } onInputChange={ this.onInputChange } />
                     <DataField type="text"   name="PASSWORD" id={ nu.ID } value={ nu.PASSWORD } onInputChange={ this.onInputChange } />
+                    <DataField type="text"   name="NAME"     id={ nu.ID } value={ nu.NAME     } onInputChange={ this.onInputChange } />
                     <DataField type="select" name="ROLE"     id={ nu.ID } value={ nu.ROLE     } onInputChange={ this.onInputChange } />
                     </li>
                     { users }

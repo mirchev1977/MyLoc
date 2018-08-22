@@ -11,6 +11,7 @@ class DataField extends Component {
         this.onInputChange = this.onInputChange.bind( this );
         this.closeInputField = this.closeInputField.bind( this );
         this.openInputField = this.openInputField.bind( this );
+        this.handleKeypress = this.handleKeypress.bind( this );
     }
 
     onInputChange ( event ) {
@@ -47,6 +48,14 @@ class DataField extends Component {
         } );
     }
 
+    handleKeypress ( event ) {
+        if ( event.key === 'Enter' ) {
+            this.setState( {
+                opened: false,
+            } );
+        }
+    }
+
     render () {
         let field = "";
         if ( this.state.opened ) {
@@ -58,6 +67,7 @@ class DataField extends Component {
                 value={ this.props.value } 
                 onChange={ this.onInputChange } 
                 onBlur={ this.closeInputField }
+                onKeyPress={ this.handleKeypress }
                 autoFocus
             />;
 
