@@ -12,6 +12,15 @@ class App extends Component {
             users: { 
                 _users:      { },
                 _changed:    { },
+                _new:        { 
+                    NEW: {
+                        ID: 'NEW',
+                        USERNAME: 'NEW',
+                        PASSWORD: 'NEW',
+                        NAME:     'NEW',
+                        ROLE:     'USER',
+                    },
+                },
             },
         };
 

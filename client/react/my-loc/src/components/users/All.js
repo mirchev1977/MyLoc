@@ -31,7 +31,12 @@ class AllUsers extends Component {
         this.setState( {
             changed: true,
         } );
-        this.props.onInputChange( 'users', '_users', id, name, value );
+
+        if ( id === 'NEW' ) {
+            this.props.onInputChange( 'users', '_new', id, name, value );
+        } else {
+            this.props.onInputChange( 'users', '_users', id, name, value );
+        }
     }
 
     submitChanges ( component, property ) {
@@ -46,6 +51,7 @@ class AllUsers extends Component {
 
     render () {
         let hash = this.props.users._users || {};
+        let nu = this.props.users._new.NEW || {};
         var users = [];
         for ( var i in hash ) {
             users.push( hash[ i ] );
@@ -74,6 +80,9 @@ class AllUsers extends Component {
                     <div  className="closedDataField bold">USERNAME</div>
                     <div  className="closedDataField bold">PASSWORD</div>
                     <div  className="closedDataField bold">ROLE</div>
+                    <DataField type="text"   name="USERNAME" id={ nu.ID } value={ nu.USERNAME } onInputChange={ this.onInputChange } />
+                    <DataField type="text"   name="PASSWORD" id={ nu.ID } value={ nu.PASSWORD } onInputChange={ this.onInputChange } />
+                    <DataField type="select" name="ROLE"     id={ nu.ID } value={ nu.ROLE     } onInputChange={ this.onInputChange } />
                     { users }
                 </ul>
                 <span className={ submButton }><DataField type="submit" name="submit" value={ submButtonName } 

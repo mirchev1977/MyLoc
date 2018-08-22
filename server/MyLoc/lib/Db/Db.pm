@@ -37,7 +37,7 @@ sub create_table_users {
        (ID INT PRIMARY KEY,
         USERNAME  CHAR(50) NOT NULL,
         PASSWORD  CHAR(50) NOT NULL,
-        ROLE      CHAR(50) NOT NULL DEFAULT user,
+        ROLE      CHAR(50) NOT NULL DEFAULT USER,
         NAME CHAR(50) NOT NULL););
 
     my $rv = $dbh->do($stmt);
@@ -49,13 +49,27 @@ sub create_table_users {
 }
 
 sub insert_one_user {
-    print Dumper( \@_ );
-    my ( $username, $password, $name ) = @_;
+    my ( $username, $password, $name, $role ) = @_;
     my $id = get_next_id( 'USERS' );
-    my $stmt = qq(INSERT INTO USERS (ID, USERNAME, PASSWORD, NAME)
-                   VALUES ( ?, ?, ?, ?));
-   my $sth = $dbh->prepare( $stmt );
-    my $rv = $sth->execute($id, $username, $password, $name ) or die $DBI::errstr;
+    my $fields;
+    my $values;
+    if ( $role ) {
+        $fields = "(ID, USERNAME, PASSWORD, NAME, ROLE)";
+        $values = "( ?, ?, ?, ?, ?)";
+    } else {
+        $fields = "(ID, USERNAME, PASSWORD, NAME)";
+        $values = "( ?, ?, ?, ?)";
+    }
+    my $stmt = qq(INSERT INTO USERS $fields
+                   VALUES $values);
+    my $sth = $dbh->prepare( $stmt );
+    my $rv;
+
+    if ( $role ) {
+        $rv = $sth->execute($id, $username, $password, $name, $role ) or die $DBI::errstr;
+    } else {
+        $rv = $sth->execute($id, $username, $password, $name ) or die $DBI::errstr;
+    }
 }
 
 sub insert_into_users {
@@ -153,6 +167,14 @@ sub update_users {
     eval {
         for my $key ( keys %$users ) {
             my $user = $users->{ $key };
+
+            if ( $user->{ 'ID' } eq 'NEW' ) {
+                $user->{ 'ID' } = get_next_id( $table );
+                my $uid = $user->{ 'ID' };
+                `echo $uid >> miro_log1`;
+                insert_one_user( $user->{ 'USERNAME' }, $user->{ 'PASSWORD' }, $user->{ 'NAME' }, $user->{ 'ROLE' } );
+                next;
+            }
 
             my $stmt = qq(UPDATE $table set USERNAME = ?, PASSWORD = ?, NAME = ?, ROLE = ? where ID= ?;);
             my $sth = $dbh->prepare( $stmt );

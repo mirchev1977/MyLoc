@@ -71,7 +71,11 @@ class DataField extends Component {
                 </select>
             }
         } else {
-            field = <div  className="closedDataField" onClick={ this.openInputField }>{ this.props.value }</div>
+            let classNm = "closedDataField";
+            if ( this.props.id === 'NEW' ) {
+                classNm += " new_item";
+            }
+            field = <div  className={ classNm } onClick={ this.openInputField }>{ this.props.value }</div>
         } 
         return (
             field
