@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  width: 50%;
+  width: 80%;
   margin: 0 auto;
 }
 
@@ -27,16 +27,18 @@
 .closedDataField {
     display: inline-block;
     padding: 5px;
-    width: 200px;
+    width: 180px;
     cursor: pointer;
+    border-right: solid black 1px;
 }
 
 .openedDataField {
-    width: 200px;
+    width: 180px;
     height: 30px;
     background-color: #ffffb3;
     min-height: 30px;
     max-height: 30px;
+    border-right: solid black 1px;
 }
 
 .bold {
@@ -59,7 +61,7 @@ div {
     display: block;
     text-align: right;
     position: absolute;
-    right: -200px;
+    right: 0px;
     top: 40%;
 }
 

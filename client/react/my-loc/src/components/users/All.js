@@ -80,9 +80,11 @@ class AllUsers extends Component {
                     <div  className="closedDataField bold">USERNAME</div>
                     <div  className="closedDataField bold">PASSWORD</div>
                     <div  className="closedDataField bold">ROLE</div>
+                    <li>
                     <DataField type="text"   name="USERNAME" id={ nu.ID } value={ nu.USERNAME } onInputChange={ this.onInputChange } />
                     <DataField type="text"   name="PASSWORD" id={ nu.ID } value={ nu.PASSWORD } onInputChange={ this.onInputChange } />
                     <DataField type="select" name="ROLE"     id={ nu.ID } value={ nu.ROLE     } onInputChange={ this.onInputChange } />
+                    </li>
                     { users }
                 </ul>
                 <span className={ submButton }><DataField type="submit" name="submit" value={ submButtonName } 
