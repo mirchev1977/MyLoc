@@ -74,6 +74,16 @@ class App extends Component {
                         let state = _this.state;
                         state[ component ][ property ] = {};
                         callback( true );
+                        if ( hash[ 'NEW' ] ) {
+                            state[ component ][ '_users' ][ 'NEW' ] = _this.state[ component ][ '_new' ][ 'NEW' ];
+                            _this.state[ component ][ '_new' ][ 'NEW' ] = {
+                                ID: 'NEW',
+                                USERNAME: 'NEW',
+                                PASSWORD: 'NEW',
+                                NAME:     'NEW',
+                                ROLE:     'USER',
+                            };
+                        }
                     } );
                 }
             }
