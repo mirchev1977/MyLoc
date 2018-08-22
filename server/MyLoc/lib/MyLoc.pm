@@ -25,6 +25,7 @@ get '/users/all' => sub {
 
     header 'Access-Control-Allow-Origin' => '*';
     content_type 'application/json';
+
     return to_json $users;
 };
 

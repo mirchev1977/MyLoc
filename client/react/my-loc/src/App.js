@@ -29,13 +29,15 @@ class App extends Component {
     }
 
     onInputChange ( component, property, id, name, data ) {
-        this.setState( prevState => {
-            let hash = this.state[ component ][ property ];
-            hash[ id ][ name ] = data;
-            let state = this.state;
-            state[ component ][ property ] = hash;
-            return state;
-        } );
+        if ( name && data ) {
+            this.setState( prevState => {
+                let hash = this.state[ component ][ property ];
+                hash[ id ][ name ] = data;
+                let state = this.state;
+                state[ component ][ property ] = hash;
+                return state;
+            } );
+        }
 
         this.setState( prevState => {
             let item = this.state[ component ][ property ][ id ];

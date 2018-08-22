@@ -52,8 +52,8 @@ class AllUsers extends Component {
         }
         users = users.map( u => 
             <li key={ u.ID }>
-                <DataField type="text" name="USERNAME" id={ u.ID } value={ u.USERNAME } onInputChange={ this.onInputChange } />
-                <DataField type="text" name="PASSWORD" id={ u.ID } value={ u.PASSWORD } onInputChange={ this.onInputChange } />
+                <DataField type="text"   name="USERNAME" id={ u.ID } value={ u.USERNAME } onInputChange={ this.onInputChange } />
+                <DataField type="text"   name="PASSWORD" id={ u.ID } value={ u.PASSWORD } onInputChange={ this.onInputChange } />
                 <DataField type="select" name="ROLE"     id={ u.ID } value={ u.ROLE     } onInputChange={ this.onInputChange } />
             </li> );
 
@@ -66,6 +66,7 @@ class AllUsers extends Component {
             submButton += ' unchangedGreen';
             submButtonName = "Saved...";
         }
+
         return (
             <div className="All">
                 <h1>All Users</h1>
