@@ -65,7 +65,7 @@ class App extends Component {
         let _this = this;
         $.ajax( {
             method: 'POST',
-            url: 'http://localhost:5000/users/update',
+            url: 'http://localhost:5000/' + component + '/update',
             data: { users: json },
             dataType: 'json',
             success: function ( data ) {
