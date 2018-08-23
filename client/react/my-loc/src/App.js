@@ -21,12 +21,16 @@ class App extends Component {
                         ROLE:     'USER',
                     },
                 },
+                _delete: {},
             },
+            deleted: '',
+            error: '',
         };
 
         this.update        = this.update.bind( this );
         this.onInputChange = this.onInputChange.bind( this );
         this.submitChanges = this.submitChanges.bind( this );
+        this.handleDelete  = this.handleDelete.bind( this );
     };
 
     update ( component, property, data ) {
@@ -58,14 +62,45 @@ class App extends Component {
         } );
     }
 
-    submitChanges ( component, property, callback ) {
+    submitChanges ( component, property, method, callback ) {
         let hash = this.state[ component ][ property ];
+        let errMsg;
+        if ( method === 'update' ) {
+            for ( let i in hash ) {
+                if ( errMsg ) {
+                    break;
+                }
+                for ( var j in hash[ i ] ) {
+                    let propValue = hash[ i ][ j ];
+                    if ( propValue.length <= 1 && j !== 'ID' ) {
+                        errMsg = "The value of the field " + '"' + j + '"' 
+                            + '(user:' + hash[ i ][ 'USERNAME' ] + ') cannot be shorter than 2 characters...';
+                        break;
+                    }
+                }
+            }
+        }
+
         let json = JSON.stringify( hash );
+
+        this.setState( {
+            deleted: '',
+        } );
+
+        this.setState( prevState => {
+            let state = this.state;
+            if ( errMsg ) {
+                state.error = errMsg;
+            }
+
+            return state;
+        } );
+        if ( errMsg ) return;
 
         let _this = this;
         $.ajax( {
             method: 'POST',
-            url: 'http://localhost:5000/' + component + '/update',
+            url: 'http://localhost:5000/' + component + '/' + method,
             data: { users: json },
             dataType: 'json',
             success: function ( data ) {
@@ -90,16 +125,41 @@ class App extends Component {
         } );
     }
 
+    handleDelete ( component, property, id ) {
+        this.setState( prevState => {
+            let item = this.state[ component ][ property ][ id ];
+            let state = this.state;
+            state[ component ][ '_delete' ][ id ] = item;
+            delete this.state[ component ][ property ][ id ];
+
+           let msg;
+            let deleted = [];
+            for ( let i in state[ component ][ '_delete' ] ) {
+                let delItem = state[ component ][ '_delete' ][ i ];
+                if ( component === 'users' ) {
+                    deleted.push( delItem[ 'USERNAME' ] );
+                    msg = "Deleted users: ";
+                }
+            }
+
+            msg += deleted.join( ', ' );
+            state.deleted = msg;
+
+            return state;
+        } );
+    }
+
     render() {
       return (
         <div className="App">
-            <Header />
+            <Header error={ this.state.error } deleted={ this.state.deleted } error={ this.state.error } />
             <Route path='/users/all' render={ 
                 () => <AllUsers 
                     users={ this.state.users }  
                     update={ this.update } 
                     onInputChange={ this.onInputChange }
                     submitChanges = { this.submitChanges }
+                    handleDelete={ this.handleDelete }
             /> } />
         </div>
       );

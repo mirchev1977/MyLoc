@@ -13,6 +13,7 @@ class AllUsers extends Component {
 
         this.onInputChange = this.onInputChange.bind( this );
         this.submitChanges = this.submitChanges.bind( this );
+        this.handleDelete  = this.handleDelete.bind(  this );
     }
 
     componentDidMount () {
@@ -39,14 +40,21 @@ class AllUsers extends Component {
         }
     }
 
-    submitChanges ( component, property ) {
-        this.props.submitChanges( component, property, updated => {
+    submitChanges ( component, property, method ) {
+        this.props.submitChanges( component, property, method, updated => {
             if ( updated ) {
                 this.setState( {
                     changed: false,
                 } );
             }
         } );
+    }
+
+    handleDelete ( id ) {
+        this.setState( {
+            changed: true,
+        } );
+        this.props.handleDelete( 'users', '_users', id );
     }
 
     render () {
@@ -62,6 +70,7 @@ class AllUsers extends Component {
                 <DataField type="text"   name="PASSWORD" id={ u.ID } value={ u.PASSWORD } onInputChange={ this.onInputChange } />
                 <DataField type="text"   name="NAME"     id={ u.ID } value={ u.NAME     } onInputChange={ this.onInputChange } />
                 <DataField type="select" name="ROLE"     id={ u.ID } value={ u.ROLE     } onInputChange={ this.onInputChange } />
+                <DataField type="text" name="Delete" id={ u.ID } value="Delete" handleDelete={ this.handleDelete } />
             </li> );
 
         let submButton = "submitButton";

@@ -203,6 +203,28 @@ sub delete_from_users {
     }
 }
 
+sub delete_users {
+    my $users_json = shift;
+    my $users =  decode_json( $users_json );
+
+    my $table = 'USERS';
+    eval {
+        for my $key ( keys %$users ) {
+            my $user = $users->{ $key };
+
+            my $stmt = qq(DELETE FROM $table  where ID= ?;);
+            my $sth = $dbh->prepare( $stmt );
+
+            my $rv = $sth->execute( $user->{ 'ID' } ) 
+                or die $DBI::errstr;
+        }
+    };
+
+    if ( $@ ) {
+        `echo error: $@ >> miro_log`;
+    }
+}
+
 sub get_next_id {
     my $table = shift;
     my $stmt = qq(SELECT id from $table order by id desc limit 1;);

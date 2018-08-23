@@ -70,4 +70,13 @@ post '/users/update' => sub {
     return to_json { STATUS => "OK" };
 };
 
+post '/users/delete' => sub {
+    my $users = body_parameters->get('users');
+    Db::Db::delete_users( $users );
+
+    header 'Access-Control-Allow-Origin' => '*';
+
+    return to_json { STATUS => "OK" };
+};
+
 true;

@@ -27,17 +27,25 @@
 .closedDataField {
     display: inline-block;
     padding: 5px;
-    width: 180px;
+    width: 15%;
     cursor: pointer;
     border-right: solid black 1px;
 }
 
 .openedDataField {
-    width: 180px;
+    width: 15%;
     height: 30px;
     background-color: #ffffb3;
     min-height: 30px;
     max-height: 30px;
+    border-right: solid black 1px;
+}
+
+.select {
+    display: inline-block;
+    padding: 5px;
+    width: 15%;
+    cursor: pointer;
     border-right: solid black 1px;
 }
 
@@ -61,7 +69,7 @@ div {
     display: block;
     text-align: right;
     position: fixed;
-    right: 10%;
+    right: 15%;
     top: 40%;
 }
 
@@ -82,6 +90,24 @@ div {
 
 .new_item {
     background-color: yellow;
+}
+
+.del_btn {
+    display: inline-block;
+    width: 50px;
+    text-align: center;
+    padding: 5px;
+    border: solid 1px darkred;
+    border-radius: 5px;
+    margin-left: 0px;
+    z-index: 100;
+    background-color: red;
+    margin: 2px 0px;
+    cursor: pointer;
+}
+
+.deletedMsg {
+    color: red;
 }
 
 @keyframes App-logo-spin {

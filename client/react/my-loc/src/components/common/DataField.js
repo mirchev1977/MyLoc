@@ -8,10 +8,11 @@ class DataField extends Component {
         this.state = {
             opened: false,
         };
-        this.onInputChange = this.onInputChange.bind( this );
+        this.onInputChange   = this.onInputChange.bind(   this );
         this.closeInputField = this.closeInputField.bind( this );
-        this.openInputField = this.openInputField.bind( this );
-        this.handleKeypress = this.handleKeypress.bind( this );
+        this.openInputField  = this.openInputField.bind(  this );
+        this.handleKeypress  = this.handleKeypress.bind(  this );
+        this.handleDelete    = this.handleDelete.bind(    this );
     }
 
     onInputChange ( event ) {
@@ -40,7 +41,8 @@ class DataField extends Component {
                 opened: false,
             } );
 
-            this.props.submitChanges( 'users', '_changed' );
+            this.props.submitChanges( 'users', '_changed', 'update' );
+            this.props.submitChanges( 'users', '_delete', 'delete' );
             return;
         }
         this.setState( {
@@ -54,6 +56,10 @@ class DataField extends Component {
                 opened: false,
             } );
         }
+    }
+
+    handleDelete ( event ) {
+        this.props.handleDelete( this.props.id );
     }
 
     render () {
@@ -76,11 +82,17 @@ class DataField extends Component {
                     <option value='ADMIN' key="1">ADMIN</option>,
                     <option value='USER' key="2">USER</option>,
                 ];
-                field = <select onChange={ this.onInputChange } onBlur={ this.closeInputField } value={ this.props.value }>
+                field = <select className="select" 
+                onChange={ this.onInputChange } onBlur={ this.closeInputField } value={ this.props.value }
+                onKeyPress={ this.handleKeypress }
+                    >
                     {arr}
                 </select>
             }
-        } else {
+        }  else if ( this.props.name === 'Delete'  ) {
+            field = <div  className="del_btn" onClick={ this.handleDelete }>{ this.props.value }</div>
+        }
+        else {
             let classNm = "closedDataField";
             if ( this.props.id === 'NEW' ) {
                 classNm += " new_item";
