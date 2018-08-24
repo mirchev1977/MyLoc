@@ -7,10 +7,6 @@ class AllUsers extends Component {
     constructor ( props ) {
         super( props );
 
-        this.state = {
-            changed: false,
-        };
-
         this.onInputChange = this.onInputChange.bind( this );
         this.submitChanges = this.submitChanges.bind( this );
         this.handleDelete  = this.handleDelete.bind(  this );
@@ -29,10 +25,6 @@ class AllUsers extends Component {
     }
 
     onInputChange ( id, name, value ) {
-        this.setState( {
-            changed: true,
-        } );
-
         if ( id === 'NEW' ) {
             this.props.onInputChange( 'users', '_new', id, name, value );
         } else {
@@ -42,18 +34,10 @@ class AllUsers extends Component {
 
     submitChanges ( component, property, method ) {
         this.props.submitChanges( component, property, method, updated => {
-            if ( updated ) {
-                this.setState( {
-                    changed: false,
-                } );
-            }
         } );
     }
 
     handleDelete ( id ) {
-        this.setState( {
-            changed: true,
-        } );
         this.props.handleDelete( 'users', '_users', id );
     }
 
@@ -75,7 +59,7 @@ class AllUsers extends Component {
 
         let submButton = "submitButton";
         let submButtonName;
-        if ( this.state.changed ) {
+        if ( !this.props.users[ '_saved' ] ) {
             submButton += ' changedRed';
             submButtonName = "Unsaved...";
         } else {

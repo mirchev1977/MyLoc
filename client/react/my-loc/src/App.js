@@ -20,6 +20,7 @@ class App extends Component {
                         NAME:     'NEW',
                         ROLE:     'USER',
                     },
+                _saved: true,
                 },
                 _delete: {},
             },
@@ -48,6 +49,7 @@ class App extends Component {
                 hash[ id ][ name ] = data;
                 let state = this.state;
                 state[ component ][ property ] = hash;
+                state[ component ][ '_saved' ] = false;
                 return state;
             } );
         }
@@ -90,7 +92,7 @@ class App extends Component {
         this.setState( prevState => {
             let state = this.state;
             if ( errMsg ) {
-                state.error = errMsg;
+                state.error = "Error: " + errMsg;
             }
 
             return state;
@@ -107,6 +109,7 @@ class App extends Component {
                 if ( data[ 'STATUS' ] === 'OK' ) {
                     _this.setState( prevState => {
                         let state = _this.state;
+                        state[ component ][ '_saved' ] = true;
                         state[ component ][ property ] = {};
                         callback( true );
                         if ( hash[ 'NEW' ] ) {
@@ -129,6 +132,7 @@ class App extends Component {
         this.setState( prevState => {
             let item = this.state[ component ][ property ][ id ];
             let state = this.state;
+            state[ component ][ '_saved' ] = false;
             state[ component ][ '_delete' ][ id ] = item;
             delete this.state[ component ][ property ][ id ];
 
