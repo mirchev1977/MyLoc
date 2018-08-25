@@ -70,6 +70,14 @@ sub insert_one_user {
     } else {
         $rv = $sth->execute($id, $username, $password, $name ) or die $DBI::errstr;
     }
+
+    my $created = {
+        ID       => $id,
+        USERNAME => $username,
+        NAME     => $name, 
+    };
+
+    return $created;
 }
 
 sub insert_into_users {

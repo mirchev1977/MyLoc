@@ -3,7 +3,9 @@ import { Route } from 'react-router-dom';
 import './App.css';
 import Header from './components/common/Header.js';
 import AllUsers from './components/users/All.js';
+import Register from './components/users/Register.js';
 import $ from 'jquery';
+import Cookies from 'universal-cookie';
 
 class App extends Component {
     constructor ( props )  {
@@ -26,17 +28,24 @@ class App extends Component {
             },
             deleted: '',
             error: '',
+            common: {
+                loggedIn: {},
+            },
         };
 
-        this.update        = this.update.bind( this );
-        this.onInputChange = this.onInputChange.bind( this );
-        this.submitChanges = this.submitChanges.bind( this );
-        this.handleDelete  = this.handleDelete.bind( this );
+        this.update         = this.update.bind( this );
+        this.onInputChange  = this.onInputChange.bind( this );
+        this.submitChanges  = this.submitChanges.bind( this );
+        this.handleDelete   = this.handleDelete.bind( this );
+        this.printError     = this.printError.bind( this );
+        this.handleRegister = this.handleRegister.bind( this );
+        this.setCookie      = this.setCookie.bind( this );
     };
 
     update ( component, property, data ) {
         this.setState( prevState => {
             let state = this.state;
+            state[ component ][ '_saved' ] = true;
             state[ component ][ property ] = data;
             return state;
         } );
@@ -97,7 +106,9 @@ class App extends Component {
 
             return state;
         } );
+
         if ( errMsg ) return;
+
 
         let _this = this;
         $.ajax( {
@@ -153,10 +164,39 @@ class App extends Component {
         } );
     }
 
+    printError ( msg ) {
+        msg = 'Error: ' + msg;
+        this.setState( {
+            error: msg,
+        } );
+
+        setTimeout( () => {
+            this.setState( {
+                error: '',
+            } );
+        }, 10000 );
+    }
+
+    handleRegister ( data, error, success ) {
+        data[ 'SESS' ] = JSON.parse( data[ 'SESS' ] );
+        success( data );
+        this.setState( prevState => {
+            let state = this.state;
+            state[ 'common' ][ 'loggedIn' ] = data;
+            return state;
+        } );
+    }
+
+    setCookie( sessData ) {
+        const u_cookies = new Cookies();
+        u_cookies.set('dancer.session', sessData[ 'id' ], { path: '/' });
+    }
+
     render() {
       return (
         <div className="App">
-            <Header error={ this.state.error } deleted={ this.state.deleted } error={ this.state.error } />
+            <Header error={ this.state.error } deleted={ this.state.deleted } error={ this.state.error } 
+                common={ this.state.common } />
             <Route path='/users/all' render={ 
                 () => <AllUsers 
                     users={ this.state.users }  
@@ -164,6 +204,12 @@ class App extends Component {
                     onInputChange={ this.onInputChange }
                     submitChanges = { this.submitChanges }
                     handleDelete={ this.handleDelete }
+            /> } />
+            <Route path='/users/register' render={
+                () => <Register 
+                printError={ this.printError } 
+                handleRegister={ this.handleRegister } 
+                setCookie={ this.setCookie }
             /> } />
         </div>
       );

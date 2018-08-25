@@ -2,9 +2,11 @@ package MyLoc;
 use Dancer2;
 use Db::Db;
 use Data::Dumper;
+use Digest::MD5 qw(md5);
 
 our $VERSION = '0.1';
 my  $db_test = Db::Db::get_db();
+
 
 get '/' => sub {
     #Db::Db::create_table_users();
@@ -17,7 +19,11 @@ get '/' => sub {
     #    { one => $write, two => $write }, 
     #    { one => $write, two => $write }, 
     #];
-    "<h1>Home: Hello</h1>"
+    my $sess = session( 'logged' ) || { logged => {} };
+
+    print "miro:sess: " . Dumper( $sess );
+
+    return to_json( $sess );
 };
 
 get '/users/all' => sub {
@@ -78,5 +84,49 @@ post '/users/delete' => sub {
 
     return to_json { STATUS => "OK" };
 };
+
+post '/users/register' => sub {
+    my $user = body_parameters->get('user');
+    my $u =  decode_json( $user );
+    my $created = Db::Db::insert_one_user( $u->{ 'USERNAME' }, $u->{ 'PASSWORD' }, $u->{ 'NAME' } );
+
+    $created->{ 'ROLE' } = 'USER';
+    #id' => 'W4D4U8zZ2tUmX-aIcZ0kxq5kINMG-S5i',
+    #             'is_dirty' => 1,
+    #             'data' => {
+    #                         'logged' => {
+    #                                       'TOKEN' => 't<�����F��4��X',
+    #                                       'USERNAME' => 'simo',
+    #                                       'ID' => 33,
+    #                                       'ROLE' => 'USER',
+    #                                       'NAME' => 'simo'
+    #                                     }
+    #                       }
+    #           }, 'Dancer2::Core::Session' );
+
+
+    session( 'logged' => $created );
+    my $sess_id = session->{ 'id' };
+    my $sess_data = session->{ 'data' }->{ 'logged' };
+    my $sess = {
+        id   => $sess_id,
+        data => $sess_data,
+    };
+
+    my $json_session = to_json( $sess );
+    $created->{ 'SESS' } = $json_session;
+
+    header 'Access-Control-Allow-Origin' => '*';
+
+    return to_json { REGISTERED => $created };
+};
+
+#get '/users/register' => sub {
+#    my $hr = { one => 1, two => 2 };
+#
+#    session( 'logged', $hr );
+#
+#    "<h1>Test: users/register</h1>"
+#};
 
 true;

@@ -50,12 +50,40 @@ class AllUsers extends Component {
         }
         users = users.map( u => 
             <li key={ u.ID }>
-                <DataField type="text"   name="USERNAME" id={ u.ID } value={ u.USERNAME } onInputChange={ this.onInputChange } />
-                <DataField type="text"   name="PASSWORD" id={ u.ID } value={ u.PASSWORD } onInputChange={ this.onInputChange } />
-                <DataField type="text"   name="NAME"     id={ u.ID } value={ u.NAME     } onInputChange={ this.onInputChange } />
-                <DataField type="select" name="ROLE"     id={ u.ID } value={ u.ROLE     } onInputChange={ this.onInputChange } />
-                <DataField type="text" name="Delete" id={ u.ID } value="Delete" handleDelete={ this.handleDelete } />
-            </li> );
+                <DataField type="text"   
+                    name="USERNAME" 
+                    id={ u.ID } 
+                    value={ u.USERNAME } 
+                    onInputChange={ this.onInputChange } 
+                    component="users"
+                />
+                <DataField type="text"   
+                    name="PASSWORD" 
+                    id={ u.ID } 
+                    value={ u.PASSWORD } 
+                    onInputChange={ this.onInputChange } 
+                    component="users"
+                />
+                <DataField type="text"   
+                    name="NAME"     
+                    id={ u.ID } 
+                    value={ u.NAME     } 
+                    onInputChange={ this.onInputChange } 
+                    component="users"
+                />
+                <DataField type="select" 
+                    name="ROLE"     
+                    id={ u.ID } 
+                    value={ u.ROLE     } 
+                    onInputChange={ this.onInputChange } 
+                    component="users"
+                />
+                <DataField type="text"   
+                    name="Delete" 
+                    id={ u.ID } 
+                    value="Delete" handleDelete={ this.handleDelete } 
+                    component="users"
+                /> </li> );
 
         let submButton = "submitButton";
         let submButtonName;
@@ -76,15 +104,47 @@ class AllUsers extends Component {
                     <div  className="closedDataField bold">NAME</div>
                     <div  className="closedDataField bold">ROLE</div>
                     <li>
-                    <DataField type="text"   name="USERNAME" id={ nu.ID } value={ nu.USERNAME } onInputChange={ this.onInputChange } />
-                    <DataField type="text"   name="PASSWORD" id={ nu.ID } value={ nu.PASSWORD } onInputChange={ this.onInputChange } />
-                    <DataField type="text"   name="NAME"     id={ nu.ID } value={ nu.NAME     } onInputChange={ this.onInputChange } />
-                    <DataField type="select" name="ROLE"     id={ nu.ID } value={ nu.ROLE     } onInputChange={ this.onInputChange } />
+                    <DataField 
+                        type="text"   
+                        name="USERNAME" 
+                        id={ nu.ID } 
+                        value={ nu.USERNAME } 
+                        onInputChange={ this.onInputChange } 
+                        component="users"
+                    />
+                    <DataField 
+                        type="text"   
+                        name="PASSWORD" 
+                        id={ nu.ID } 
+                        value={ nu.PASSWORD } 
+                        onInputChange={ this.onInputChange } 
+                        component="users"
+                    />
+                    <DataField 
+                        type="text"   
+                        name="NAME"     
+                        id={ nu.ID } 
+                        value={ nu.NAME     } 
+                        onInputChange={ this.onInputChange } 
+                        component="users"
+                    />
+                    <DataField 
+                        type="select" 
+                        name="ROLE"     
+                        id={ nu.ID } 
+                        value={ nu.ROLE     } 
+                        onInputChange={ this.onInputChange } 
+                        component="users"
+                    />
                     </li>
                     { users }
                 </ul>
-                <span className={ submButton }><DataField type="submit" name="submit" value={ submButtonName } 
-                    submitChanges={ this.submitChanges } /></span>
+                <span className={ submButton }><DataField type="submit" 
+                    name="submit" 
+                    value={ submButtonName } 
+                    submitChanges={ this.submitChanges } 
+                    component="users"
+                /></span>
             </div>
         );
     }

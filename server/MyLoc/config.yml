@@ -28,7 +28,8 @@ template: "simple"
 #       end_tag:   '%>'
 
 # session engine
-#
+session: "YAML"
+
 # Simple: in-memory session store - Dancer2::Session::Simple
 # YAML: session stored in YAML files - Dancer2::Session::YAML
 #

@@ -30,6 +30,9 @@ class DataField extends Component {
     }
 
     closeInputField ( event ) {
+        if ( this.props.component === 'register' ) {
+            this.props.handleCloseField( this.props.name );
+        }
         this.setState( {
             opened: false,
         } );
@@ -41,10 +44,19 @@ class DataField extends Component {
                 opened: false,
             } );
 
-            this.props.submitChanges( 'users', '_changed', 'update' );
-            this.props.submitChanges( 'users', '_delete', 'delete' );
+            if ( this.props.component === 'users' ) {
+                this.props.submitChanges( 'users', '_changed', 'update' );
+                this.props.submitChanges( 'users', '_delete', 'delete' );
+            } else if ( this.props.component === 'register' ) {
+                this.props.submitChanges();
+            }
             return;
         }
+
+        if ( this.props.component === 'register' ) {
+            this.props.handleOnClick( this.props.name );
+        }
+
         this.setState( {
             opened: true,
         } );
