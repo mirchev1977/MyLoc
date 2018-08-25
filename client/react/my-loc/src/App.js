@@ -34,12 +34,14 @@ class App extends Component {
             },
         };
 
-        this.update         = this.update.bind( this );
-        this.onInputChange  = this.onInputChange.bind( this );
-        this.submitChanges  = this.submitChanges.bind( this );
-        this.handleDelete   = this.handleDelete.bind( this );
-        this.printError     = this.printError.bind( this );
-        this.handleRegister = this.handleRegister.bind( this );
+        this.update          = this.update.bind( this );
+        this.onInputChange   = this.onInputChange.bind( this );
+        this.submitChanges   = this.submitChanges.bind( this );
+        this.handleDelete    = this.handleDelete.bind( this );
+        this.printError      = this.printError.bind( this );
+        this.handleRegister  = this.handleRegister.bind( this );
+        this.checkLoggedIn   = this.checkLoggedIn.bind( this );
+        this.checkIfLoggedIn = this.checkIfLoggedIn.bind( this );
     };
 
     update ( component, property, data ) {
@@ -206,7 +208,10 @@ class App extends Component {
 
         let user_json = JSON.stringify( user );
 
+        this.checkLoggedIn( user_json, user );
+    }
 
+    checkLoggedIn ( user_json, user ) {
         let _this = this;
         $.ajax( {
             method: 'POST',
@@ -228,6 +233,14 @@ class App extends Component {
                 });
             }
         });
+    } 
+
+    checkIfLoggedIn ( callback ) {
+        if ( this.state.common.loggedIn[ 'ID' ] ) {
+            callback( true );
+        } else {
+            callback( false );
+        }
     }
 
     render() {
@@ -248,6 +261,7 @@ class App extends Component {
                 printError={ this.printError } 
                 handleRegister={ this.handleRegister } 
                 setCookie={ this.setCookie }
+                checkIfLoggedIn={ this.checkIfLoggedIn }
             /> } />
         </div>
       );
