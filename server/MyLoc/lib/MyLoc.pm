@@ -66,7 +66,8 @@ post '/users/update' => sub {
 
 post '/users/delete' => sub {
     my $users = body_parameters->get('users');
-    Db::Db::delete_users( $users );
+    Db::Db::delete_users( 'USERS', $users );
+    Db::Db::delete_users( 'LOGGEDIN', $users );
 
     header 'Access-Control-Allow-Origin' => '*';
 

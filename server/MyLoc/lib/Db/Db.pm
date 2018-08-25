@@ -208,7 +208,6 @@ sub update_users {
             if ( $user->{ 'ID' } eq 'NEW' ) {
                 $user->{ 'ID' } = get_next_id( $table );
                 my $uid = $user->{ 'ID' };
-                `echo $uid >> miro_log1`;
                 insert_one_user( $user->{ 'USERNAME' }, $user->{ 'PASSWORD' }, $user->{ 'NAME' }, $user->{ 'ROLE' } );
                 next;
             }
@@ -227,8 +226,8 @@ sub update_users {
 }
 
 sub delete_from_users {
+    my $table = shift;
     my $id = shift;
-    my $table = 'USERS';
     my $stmt = qq(DELETE FROM $table where ID= ?;);
     my $sth = $dbh->prepare( $stmt );
     my $rv = $sth->execute( $id ) or die $DBI::errstr;
@@ -241,10 +240,10 @@ sub delete_from_users {
 }
 
 sub delete_users {
+    my $table = shift;
     my $users_json = shift;
     my $users =  decode_json( $users_json );
 
-    my $table = 'USERS';
     eval {
         for my $key ( keys %$users ) {
             my $user = $users->{ $key };

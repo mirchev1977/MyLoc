@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import './App.css';
+import { withRouter } from 'react-router';
 import Header from './components/common/Header.js';
 import AllUsers from './components/users/All.js';
 import Register from './components/users/Register.js';
@@ -214,6 +215,8 @@ class App extends Component {
             dataType: 'json',
             success: function ( data ) {
                 if ( !data.STAT )  {
+                    localStorage.clear();
+                    _this.props.history.push('/'); 
                     return;
                 }
 
@@ -251,4 +254,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default withRouter( App );
