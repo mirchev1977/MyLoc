@@ -39,7 +39,6 @@ class App extends Component {
         this.handleDelete   = this.handleDelete.bind( this );
         this.printError     = this.printError.bind( this );
         this.handleRegister = this.handleRegister.bind( this );
-        this.setCookie      = this.setCookie.bind( this );
     };
 
     update ( component, property, data ) {
@@ -178,7 +177,6 @@ class App extends Component {
     }
 
     handleRegister ( data, error, success ) {
-        data[ 'SESS' ] = JSON.parse( data[ 'SESS' ] );
         success( data );
         this.setState( prevState => {
             let state = this.state;
@@ -187,9 +185,46 @@ class App extends Component {
         } );
     }
 
-    setCookie( sessData ) {
-        const u_cookies = new Cookies();
-        u_cookies.set('dancer.session', sessData[ 'id' ], { path: '/' });
+    componentDidMount () {
+        let uid    = localStorage.getItem( 'LOGGEDIN_ID'       );
+        let uname  = localStorage.getItem( 'LOGGEDIN_NAME'     );
+        let urole  = localStorage.getItem( 'LOGGEDIN_ROLE'    );
+        let utoken = localStorage.getItem( 'LOGGEDIN_TOKEN'    );
+        let uuname = localStorage.getItem( 'LOGGEDIN_USERNAME' );
+        if ( !uid || !uname || !urole || !utoken || !uuname ) {
+            return;
+        }
+
+        let user = {
+            ID      : uid,
+            USERNAME: uuname,
+            NAME    : uname,
+            ROLE    : urole,
+            TOKEN   : utoken,
+        };
+
+        let user_json = JSON.stringify( user );
+
+
+        let _this = this;
+        $.ajax( {
+            method: 'POST',
+            url: 'http://localhost:5000/check/loggedin',
+            data: { user: user_json },
+            dataType: 'json',
+            success: function ( data ) {
+                if ( !data.STAT )  {
+                    return;
+                }
+
+                _this.setState( prevState => {
+                    let state = _this.state;
+                    state.common.loggedIn = user;
+
+                    return state;
+                });
+            }
+        });
     }
 
     render() {

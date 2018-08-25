@@ -48,6 +48,34 @@ sub create_table_users {
     }
 }
 
+sub create_table_logged_in {
+    my $stmt = qq(CREATE TABLE LOGGEDIN
+       (TOKEN CHAR(100) PRIMARY KEY,
+        ID        INT,
+        USERNAME  CHAR(50),
+        PASSWORD  CHAR(50),
+        ROLE      CHAR(50),
+        NAME      CHAR(50)););
+
+    my $rv = $dbh->do($stmt);
+    if($rv < 0) {
+       print $DBI::errstr;
+    } else {
+       print "Table loggedin created successfully\n";
+    }
+}
+
+sub insert_into_loggedin {
+    print "dump it: " . Dumper( \@_ );
+    my ( $token, $id, $username, $password, $role, $name ) = @_;
+    my $stmt = qq(INSERT INTO LOGGEDIN (TOKEN, ID, USERNAME, PASSWORD, ROLE, NAME)
+                   VALUES ( ?, ?, ?, ?, ?, ? ));
+    my $sth = $dbh->prepare( $stmt );
+    my $rv = $sth->execute( $token, $id, $username, $password, $role, $name ) or die $DBI::errstr;
+
+    print "Records wrote into loggedin successfully\n";
+}
+
 sub insert_one_user {
     my ( $username, $password, $name, $role ) = @_;
     my $id = get_next_id( 'USERS' );
@@ -75,6 +103,7 @@ sub insert_one_user {
         ID       => $id,
         USERNAME => $username,
         NAME     => $name, 
+        PASSWORD => $password,
     };
 
     return $created;
@@ -250,6 +279,40 @@ sub get_next_id {
     $nxt_id++;
     print "Operation done successfully\n";
     return $nxt_id;
+}
+
+sub get_loggedin {
+    my $user = shift;
+    $user =  decode_json( $user );
+
+    my $id = shift;
+    my $stmt = qq(SELECT token, id, username, password, role, name from loggedin WHERE TOKEN = ?;);
+    my $sth = $dbh->prepare( $stmt );
+    my $rv = $sth->execute( $user->{ 'TOKEN' } ) or die $DBI::errstr;
+
+    if($rv < 0) {
+       print $DBI::errstr;
+    }
+    my @row = $sth->fetchrow_array();
+    my $out_hr = {
+        TOKEN    => $row[ 0 ],
+        ID       => $row[ 1 ],
+        USERNAME => $row[ 2 ],
+        PASSWORD => $row[ 3 ],
+        ROLE     => $row[ 4 ],
+        NAME     => $row[ 5 ],
+    };
+
+    my $loggedin = 1;
+    for my $key ( keys %$user ) {
+        if ( $user->{ $key } ne $out_hr->{ $key } ) {
+            $loggedin = 0;
+            last;
+        }
+    }
+
+    print "Operation done successfully\n";
+    return $loggedin;
 }
 
 1;

@@ -94,7 +94,7 @@ class Register extends Component {
                             localStorage.setItem( 'LOGGEDIN_NAME',     data[ 'NAME' ] );
                             localStorage.setItem( 'LOGGEDIN_USERNAME', data[ 'USERNAME' ] );
                             localStorage.setItem( 'LOGGEDIN_ROLE',     data[ 'ROLE' ] );
-                            _this.props.setCookie( data[ 'SESS' ] );
+                            localStorage.setItem( 'LOGGEDIN_TOKEN',    data[ 'TOKEN' ] );
                             _this.props.history.push('/'); 
                     } );
                 }

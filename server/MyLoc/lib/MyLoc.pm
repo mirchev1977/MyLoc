@@ -9,21 +9,9 @@ my  $db_test = Db::Db::get_db();
 
 
 get '/' => sub {
-    #Db::Db::create_table_users();
-    #Db::Db::insert_into_users();
-    #Db::Db::delete_from_users( 2 );
-    
-    #my $write = $db_test->{ 'insert' }();
-    #return to_json [
-    #    { one => $write, two => $write }, 
-    #    { one => $write, two => $write }, 
-    #    { one => $write, two => $write }, 
-    #];
-    my $sess = session( 'logged' ) || { logged => {} };
+    my $user = body_parameters->get('user');
 
-    print "miro:sess: " . Dumper( $sess );
-
-    return to_json( $sess );
+    "<h1>Home</h1>"
 };
 
 get '/users/all' => sub {
@@ -91,42 +79,40 @@ post '/users/register' => sub {
     my $created = Db::Db::insert_one_user( $u->{ 'USERNAME' }, $u->{ 'PASSWORD' }, $u->{ 'NAME' } );
 
     $created->{ 'ROLE' } = 'USER';
-    #id' => 'W4D4U8zZ2tUmX-aIcZ0kxq5kINMG-S5i',
-    #             'is_dirty' => 1,
-    #             'data' => {
-    #                         'logged' => {
-    #                                       'TOKEN' => 't<�����F��4��X',
-    #                                       'USERNAME' => 'simo',
-    #                                       'ID' => 33,
-    #                                       'ROLE' => 'USER',
-    #                                       'NAME' => 'simo'
-    #                                     }
-    #                       }
-    #           }, 'Dancer2::Core::Session' );
-
 
     session( 'logged' => $created );
     my $sess_id = session->{ 'id' };
-    my $sess_data = session->{ 'data' }->{ 'logged' };
-    my $sess = {
-        id   => $sess_id,
-        data => $sess_data,
-    };
 
-    my $json_session = to_json( $sess );
-    $created->{ 'SESS' } = $json_session;
+    Db::Db::insert_into_loggedin(
+        $sess_id, $created->{ 'ID' }, $created->{ 'USERNAME' }, $created->{ 'PASSWORD' }, $created->{ 'ROLE' },
+        $created->{ 'NAME' }
+    );
+
+    $created->{ 'TOKEN' } = $sess_id;
 
     header 'Access-Control-Allow-Origin' => '*';
 
     return to_json { REGISTERED => $created };
 };
 
-#get '/users/register' => sub {
-#    my $hr = { one => 1, two => 2 };
-#
-#    session( 'logged', $hr );
-#
-#    "<h1>Test: users/register</h1>"
-#};
+post '/check/loggedin' => sub {
+    my $user = body_parameters->get('user');
+    my $loggedin = Db::Db::get_loggedin( $user );
+
+    my $resp = { STAT => $loggedin };
+
+    header 'Access-Control-Allow-Origin' => '*'; 
+    content_type 'application/json';
+
+    return to_json $resp;
+};
+
+get '/service/route' => sub {
+    #Db::Db::create_table_users();
+    #Db::Db::insert_into_users();
+    #Db::Db::delete_from_users( 2 );
+    #Db::Db::create_table_logged_in();
+    "it is ok..."
+};
 
 true;

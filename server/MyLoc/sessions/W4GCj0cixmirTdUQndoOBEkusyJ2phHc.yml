@@ -1,0 +1,8 @@
+---
+logged:
+  ID: 11
+  NAME: Kiro Kirov
+  PASSWORD: kiro_pass
+  ROLE: USER
+  SESS: '{"data":{"PASSWORD":"kiro_pass","USERNAME":"kiro","ID":11,"NAME":"Kiro Kirov","ROLE":"USER"},"id":"W4GCj0cixmirTdUQndoOBEkusyJ2phHc"}'
+  USERNAME: kiro

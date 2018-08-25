@@ -11,7 +11,7 @@ class Header extends Component {
         let common = this.props.common;
         let userName = '';
         if ( common.loggedIn ) {
-            userName = common.loggedIn.NAME;
+            userName = common.loggedIn.USERNAME;
         }
         let helloMessage = userName ? <h1>Hello, { userName }</h1> : '';
         return(
