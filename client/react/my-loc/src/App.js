@@ -6,6 +6,7 @@ import Header from './components/common/Header.js';
 import AllUsers from './components/users/All.js';
 import Register from './components/users/Register.js';
 import Login from './components/users/LogIn.js';
+import Logout from './components/users/Logout.js';
 import $ from 'jquery';
 import Cookies from 'universal-cookie';
 
@@ -42,6 +43,7 @@ class App extends Component {
         this.printError      = this.printError.bind( this );
         this.handleRegister  = this.handleRegister.bind( this );
         this.checkLoggedIn   = this.checkLoggedIn.bind( this );
+        this.logout          = this.logout.bind( this );
     };
 
     update ( component, property, data ) {
@@ -235,6 +237,14 @@ class App extends Component {
         });
     } 
 
+    logout () {
+        this.setState( prevState => {
+            let state = this.state;
+            state[ 'common' ][ 'loggedIn' ] = {};
+            return state;
+        } );
+    }
+
     render() {
       return (
         <div className="App">
@@ -258,6 +268,8 @@ class App extends Component {
                     printError={ this.printError } 
                     loggedIn={ this.state.common.loggedIn }
                     checkLoggedIn={ this.checkLoggedIn } /> } />
+            <Route path='/logout' render={
+                () => <Logout logout={ this.logout } /> } />
         </div>
       );
     }

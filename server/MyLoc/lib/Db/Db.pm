@@ -195,22 +195,6 @@ sub get_one_users {
     return \%output;
 }
 
-sub update_users_role {
-    my $id = shift;
-    my $role = shift;
-
-    my $table = 'USERS';
-    my $stmt = qq(UPDATE $table set ROLE = ? where ID= ?;);
-    my $sth = $dbh->prepare( $stmt );
-    my $rv = $sth->execute( $role, $id ) or die $DBI::errstr;
-
-    if( $rv < 0 ) {
-       print $DBI::errstr;
-    } else {
-       print "Total number of rows updated : $rv\n";
-    }
-}
-
 sub update_users {
     my $users_json = shift;
     my $users =  decode_json( $users_json );
@@ -340,6 +324,13 @@ sub user_login {
     }
 
     return $user;
+}
+
+sub logout {
+    my $token = shift;
+    my $stmt = qq( DELETE FROM LOGGEDIN WHERE token = ?  ); 
+    my $sth  = $dbh->prepare( $stmt );
+    my $rv   = $sth->execute( $token );
 }
 
 1;

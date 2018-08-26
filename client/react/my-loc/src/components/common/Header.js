@@ -13,10 +13,12 @@ class Header extends Component {
         let helloMessage;
         let registerLink;
         let loginLink;
+        let logoutLink;
         if ( common.loggedIn[ 'ID' ] || localStorage.getItem( 'LOGGEDIN_ID' ) ) {
             let userName = common.loggedIn.USERNAME || localStorage.getItem( 'LOGGEDIN_USERNAME' );
             let role = common.loggedIn.ROLE || localStorage.getItem( 'LOGGEDIN_ROLE' );
             helloMessage = <h1>Hello, { userName }( { role } )</h1>;
+            logoutLink = <Link to='/logout' className="header_link">Logout</Link>;
         } else {
             registerLink = <Link to='/users/register' className="header_link">Register</Link>;
             loginLink    = <Link to='/users/login' className="header_link">Log In</Link>;
@@ -29,7 +31,7 @@ class Header extends Component {
                 <Link to='/users/all' className="header_link">List All Users</Link>
                 { registerLink }
                 { loginLink }
-                <Link to='/logout' className="header_link">Logout</Link>
+                { logoutLink }
                 { deletedMessage }
                 { errorMessage }
                 { helloMessage }

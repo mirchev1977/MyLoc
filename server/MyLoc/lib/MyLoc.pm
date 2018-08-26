@@ -39,22 +39,6 @@ get '/user/create/:username/:password/:name' => sub {
     "$username == $password == $name"
 };
 
-get '/roll/update/:id/:role' => sub {
-    my $id = route_parameters->get('id');
-    my $role = route_parameters->get('role');
-    Db::Db::update_users_role( $id, $role );
-
-    content_type 'application/json';
-    return to_json { $id => $role, message => 'successfully updated' };
-};
-
-get '/next/:tableName' => sub {
-    my $table_name = route_parameters->get( 'tableName' );
-    my $next_id = Db::Db::get_next_id( $table_name );
-    content_type 'application/json';
-    "$next_id"
-};
-
 post '/users/update' => sub {
     my $users = body_parameters->get('users');
     Db::Db::update_users( $users );
@@ -127,6 +111,16 @@ post '/user/login' => sub {
     return to_json $user;
 };
 
+post '/logout' => sub {
+    my $token = body_parameters->get('token');
+    Db::Db::logout( $token );
+    my $stat = { STAT => 'OK' };
+
+    header 'Access-Control-Allow-Origin' => '*'; 
+    content_type 'application/json';
+
+    return to_json $stat;
+};
 get '/service/route' => sub {
     #Db::Db::create_table_users();
     #Db::Db::insert_into_users();
