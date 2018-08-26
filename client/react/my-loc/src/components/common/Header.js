@@ -6,17 +6,19 @@ class Header extends Component {
         super( props );
     }
     render() {
+        let common = this.props.common;
+
         let deletedMessage = <h1 className="deletedMsg">{ this.props.deleted }</h1>
         let errorMessage = <h1 className="deletedMsg">{ this.props.error }</h1>
-        let common = this.props.common;
         let userName = '';
+        let helloMessage;
         let registerLink;
-        if ( common.loggedIn[ 'ID' ] ) {
-            userName = common.loggedIn.USERNAME;
+        if ( common.loggedIn[ 'ID' ] || localStorage.getItem( 'LOGGEDIN_ID' ) ) {
+            userName = common.loggedIn.USERNAME || localStorage.getItem( 'LOGGEDIN_USERNAME' );
+            helloMessage = <h1>Hello, { userName }</h1>;
         } else {
             registerLink = <Link to='/users/register' className="header_link">Register</Link>;
         }
-        let helloMessage = userName ? <h1>Hello, { userName }</h1> : '';
         return(
             <div className="header">
                 <h1>Welcome to MyLoc</h1>
