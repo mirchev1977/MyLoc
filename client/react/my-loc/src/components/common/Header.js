@@ -32,6 +32,7 @@ class Header extends Component {
                 <h1>Welcome to MyLoc</h1>
                 <h5>Keep all your places of interest here!</h5>
                 <Link to='/' className="header_link">Home</Link>
+                <Link to='/myplaces' className="header_link">My Places</Link>
                 { listAllUsersLink }
                 { registerLink }
                 { loginLink }

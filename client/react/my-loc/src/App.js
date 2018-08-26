@@ -7,8 +7,9 @@ import AllUsers from './components/users/All.js';
 import Register from './components/users/Register.js';
 import Login from './components/users/LogIn.js';
 import Logout from './components/users/Logout.js';
+import AllPlaces from './components/places/AllPlaces.js';
 import $ from 'jquery';
-import Cookies from 'universal-cookie';
+
 
 class App extends Component {
     constructor ( props )  {
@@ -270,6 +271,8 @@ class App extends Component {
                     checkLoggedIn={ this.checkLoggedIn } /> } />
             <Route path='/logout' render={
                 () => <Logout logout={ this.logout } /> } />
+            <Route path='/myplaces' render={
+                () => <AllPlaces /> } />
         </div>
       );
     }

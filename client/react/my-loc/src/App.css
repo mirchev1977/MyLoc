@@ -85,6 +85,8 @@ div {
 }
 
 .unchangedGreen {
+    rder: none;
+        min-width: 200px;/
     background-color: green;
 }
 
@@ -156,6 +158,94 @@ div {
     text-align: center;
     border: none;
 }
+
+.allPlaces {
+    text-align: center;
+    position: relative;
+}
+
+.myPlace {
+    text-align: left;
+}
+
+.placeHeader {
+    text-align: center;
+    cursor: pointer;
+    position: absolute;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    background-color: blue;
+    min-height: 50px;
+}
+
+.placeContent {
+    margin-bottom: 3px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.placeHeader p, .placeContent p {
+    display: inline-block;
+    width: 14%;
+    text-align: center;
+    margin-right: 5px;
+    margin-left: 5px;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.placeContent p {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-weight: normal;
+}
+
+.placeHeader p.longer, .placeContent p.longer {
+    width: 65%;
+}
+
+.placeContent .placeViewOpened {
+    background-color: yellow;
+    padding: 5px;
+    text-align: center;
+}
+.placeViewOpened .closedDataField {
+    background-color: green;
+    border: none;
+    min-width: 200px;
+}
+
+.placeViewOpened .openedDataField {
+    border: none;
+    min-width: 200px;
+}
+
+.placeFields {
+    padding-top: 10px;
+}
+
+.placeViewOpened .column {
+    background-color: red;
+    min-width: 24%;
+    max-width: 30%;
+    padding: 20px;
+    display: inline-block;
+    margin-left: 5px;
+    vertical-align: top;
+}
+
+.placeViewOpened .column img {
+    width: 100%;
+}
+
+.placeViewOpened .mapHolder {
+    min-width: 90%;
+    max-width: 93%;
+    margin: 5px 0;
+}
+
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
