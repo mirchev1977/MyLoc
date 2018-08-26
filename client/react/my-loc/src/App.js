@@ -9,7 +9,6 @@ import $ from 'jquery';
 import Cookies from 'universal-cookie';
 
 class App extends Component {
-    registerRoute = ''; 
     constructor ( props )  {
         super( props );
         this.state = {
@@ -190,16 +189,6 @@ class App extends Component {
 
     componentDidMount () {
         this.checkLoggedIn();
-
-        if ( !this.state.common.loggedIn[ 'ID' ] ) {
-            this.registerRoute = <Route path='/users/register' render={
-                    () => <Register 
-                        printError={ this.printError } 
-                        handleRegister={ this.handleRegister } 
-                        /> } />;
-        } else {
-            this.props.history.push( '/' );
-        }
     }
 
     checkLoggedIn () {
@@ -258,7 +247,10 @@ class App extends Component {
                     submitChanges = { this.submitChanges }
                     handleDelete={ this.handleDelete }
             /> } />
-            { this.registerRoute }
+            <Route path='/users/register' render={
+                () => <Register 
+                    printError={ this.printError } 
+                    handleRegister={ this.handleRegister } /> } />
         </div>
       );
     }
