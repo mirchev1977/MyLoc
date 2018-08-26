@@ -78,6 +78,7 @@
                 localStorage.setItem( 'LOGGEDIN_USERNAME', data[ 'USERNAME' ] );
                 localStorage.setItem( 'LOGGEDIN_ROLE',     data[ 'ROLE' ] );
                 localStorage.setItem( 'LOGGEDIN_TOKEN',    data[ 'TOKEN' ] );
+                _this.props.checkLoggedIn();
                 _this.props.history.push( '/' );
             }
         } );
