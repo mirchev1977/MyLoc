@@ -157,9 +157,24 @@ sub fetch_users {
 
 sub get_one_users {
     my $id = shift;
-    my $stmt = qq(SELECT id, username, password, role, name from USERS where ID = ?;);
+    my $username = shift;
+    my $password = shift;
+
+    my $stmt;
+    if ( $id ) {
+        $stmt = qq(SELECT id, username, password, role, name from USERS where ID = ?;);
+    } else {
+        $stmt = qq(SELECT id, username, password, role, name from USERS where USERNAME = ? AND PASSWORD = ?;);
+    }
+
     my $sth = $dbh->prepare( $stmt );
-    my $rv = $sth->execute( $id ) or die $DBI::errstr;
+
+    my $rv;
+    if ( $id ) {
+        $rv = $sth->execute( $id ) or die $DBI::errstr;
+    } else {
+        $rv = $sth->execute( $username, $password ) or die $DBI::errstr;
+    }
 
     if($rv < 0) {
        print $DBI::errstr;
@@ -312,6 +327,19 @@ sub get_loggedin {
 
     print "Operation done successfully\n";
     return $loggedin;
+}
+
+sub user_login {
+    my $user = shift;
+    $user =  decode_json( $user );
+
+    $user =  get_one_users( '', $user->{ 'USERNAME' }, $user->{ 'PASSWORD' } );
+
+    for ( keys %$user ) {
+        $user = $user->{ $_ };
+    }
+
+    return $user;
 }
 
 1;

@@ -13,11 +13,13 @@ class Header extends Component {
         let userName = '';
         let helloMessage;
         let registerLink;
+        let loginLink;
         if ( common.loggedIn[ 'ID' ] || localStorage.getItem( 'LOGGEDIN_ID' ) ) {
             userName = common.loggedIn.USERNAME || localStorage.getItem( 'LOGGEDIN_USERNAME' );
             helloMessage = <h1>Hello, { userName }</h1>;
         } else {
             registerLink = <Link to='/users/register' className="header_link">Register</Link>;
+            loginLink    = <Link to='/users/login' className="header_link">Log In</Link>;
         }
         return(
             <div className="header">
@@ -26,6 +28,7 @@ class Header extends Component {
                 <Link to='/' className="header_link">Home</Link>
                 <Link to='/users/all' className="header_link">List All Users</Link>
                 { registerLink }
+                { loginLink }
                 <Link to='/logout' className="header_link">Logout</Link>
                 { deletedMessage }
                 { errorMessage }

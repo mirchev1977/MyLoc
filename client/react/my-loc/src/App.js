@@ -5,6 +5,7 @@ import { withRouter } from 'react-router';
 import Header from './components/common/Header.js';
 import AllUsers from './components/users/All.js';
 import Register from './components/users/Register.js';
+import Login from './components/users/LogIn.js';
 import $ from 'jquery';
 import Cookies from 'universal-cookie';
 
@@ -250,7 +251,13 @@ class App extends Component {
             <Route path='/users/register' render={
                 () => <Register 
                     printError={ this.printError } 
+                    loggedIn={ this.state.common.loggedIn }
                     handleRegister={ this.handleRegister } /> } />
+            <Route path='/users/login' render={
+                () => <Login 
+                    printError={ this.printError } 
+                    loggedIn={ this.state.common.loggedIn }
+                    checkLoggedIn={ this.checkLoggedIn } /> } />
         </div>
       );
     }

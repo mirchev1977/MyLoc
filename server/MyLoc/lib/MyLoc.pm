@@ -108,6 +108,25 @@ post '/check/loggedin' => sub {
     return to_json $resp;
 };
 
+post '/user/login' => sub {
+    my $user = body_parameters->get('user');
+    $user = Db::Db::user_login( $user );
+    session( 'logged' => $user );
+    my $sess_id = session->{ 'id' };
+
+    Db::Db::insert_into_loggedin(
+        $sess_id, $user->{ 'ID' }, $user->{ 'USERNAME' }, $user->{ 'PASSWORD' }, $user->{ 'ROLE' },
+        $user->{ 'NAME' }
+    );
+
+    $user->{ 'TOKEN' } = $sess_id;
+
+    header 'Access-Control-Allow-Origin' => '*'; 
+    content_type 'application/json';
+
+    return to_json $user;
+};
+
 get '/service/route' => sub {
     #Db::Db::create_table_users();
     #Db::Db::insert_into_users();

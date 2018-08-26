@@ -102,7 +102,7 @@ class Register extends Component {
     }
 
     componentWillMount () {
-        let uid    = localStorage.getItem( 'LOGGEDIN_ID'       );
+        let uid    = this.props.loggedIn[ 'ID' ] || localStorage.getItem( 'LOGGEDIN_ID' );
 
         if ( uid ) {
             this.props.history.push( '/' );

@@ -1,43 +1,39 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router';
-import DataField from '../common/DataField.js';
-import  '../../App.css';
-import $ from 'jquery';
+    import React, { Component } from 'react';
+    import { withRouter } from 'react-router';
+    import DataField from '../common/DataField.js';
+    import  '../../App.css';
+    import $ from 'jquery';
 
 
-class Register extends Component {
-    constructor ( props ) {
-        super( props );
+    class Login extends Component {
+        constructor ( props ) {
+            super( props );
 
-        this.state = {
-            USERNAME: 'Enter here USERNAME',
-            _USERNAME: 'Enter here USERNAME',
-            PASSWORD: 'Enter here PASSWORD',
-            _PASSWORD: 'Enter here PASSWORD',
-            REPEATPW: 'Repeat here the PASSWОRD',
-            _REPEATPW: 'Repeat here the PASSWОRD',
-            NAME    : 'Enter here your NAМE',
-            _NAME    : 'Enter here your NAМE',
-        };
+            this.state = {
+                USERNAME: 'Enter here USERNAME',
+                _USERNAME: 'Enter here USERNAME',
+                PASSWORD: 'Enter here PASSWORD',
+                _PASSWORD: 'Enter here PASSWORD',
+            };
 
-        this.onInputChange     = this.onInputChange.bind( this );
-        this.handleOnClick     = this.handleOnClick.bind(  this );
-        this.handleCloseField  = this.handleCloseField.bind(  this );
-        this.submitChanges = this.submitChanges.bind( this );
-    }
+            this.onInputChange     = this.onInputChange.bind( this );
+            this.handleOnClick     = this.handleOnClick.bind(  this );
+            this.handleCloseField  = this.handleCloseField.bind(  this );
+            this.submitChanges = this.submitChanges.bind( this );
+        }
 
-    onInputChange ( id, name, value ) {
-        this.setState( prevState => {
-            let state = this.state;
-            state[ name ] = '';
-            state[ name ] = value;
-            return state;
-        } );
-    }
+        onInputChange ( id, name, value ) {
+            this.setState( prevState => {
+                let state = this.state;
+                state[ name ] = '';
+                state[ name ] = value;
+                return state;
+            } );
+        }
 
-    handleOnClick ( name ) {
-        this.setState( { [name]: '' } );
-    }
+        handleOnClick ( name ) {
+            this.setState( { [name]: '' } );
+        }
 
     handleCloseField ( name ) {
         if ( !this.state[ name ] ) {
@@ -64,45 +60,31 @@ class Register extends Component {
             }
         }
 
-        if ( state[ 'PASSWORD' ] !== state[ 'REPEATPW' ] ) {
-            let msg = 'PASSWORD AND REPEATPW don\'t match';
-            this.props.printError ( msg );
-            return;
-        }
-
         let json = JSON.stringify( state );
 
         let _this = this;
         $.ajax( {
             method: 'POST',
-            url: 'http://localhost:5000/' + 'users' + '/' + 'register',
+            url: 'http://localhost:5000/user/login',
             data: { user: json },
             dataType: 'json',
             success: function ( data ) {
-                let registered = data[ 'REGISTERED' ];
-
-                if ( registered ) {
-                    _this.props.handleRegister( registered, 
-                        function ( err ) {
-                            if ( err ) {
-                                _this.props.printError ( 'System error' );
-                            }
-                        }, 
-                        function ( data ) {
-                            localStorage.setItem( 'LOGGEDIN_ID',       data[ 'ID' ] );
-                            localStorage.setItem( 'LOGGEDIN_NAME',     data[ 'NAME' ] );
-                            localStorage.setItem( 'LOGGEDIN_USERNAME', data[ 'USERNAME' ] );
-                            localStorage.setItem( 'LOGGEDIN_ROLE',     data[ 'ROLE' ] );
-                            localStorage.setItem( 'LOGGEDIN_TOKEN',    data[ 'TOKEN' ] );
-                            _this.props.history.push('/'); 
-                    } );
+                if ( !data[ 'ID' ] || !data[ 'USERNAME' ] ) {
+                    _this.props.printError( 'There is no such user' );
+                    return _this.props.history.push( '/' );
                 }
+                localStorage.setItem( 'LOGGEDIN_ID',       data[ 'ID' ] );
+                localStorage.setItem( 'LOGGEDIN_NAME',     data[ 'NAME' ] );
+                localStorage.setItem( 'LOGGEDIN_USERNAME', data[ 'USERNAME' ] );
+                localStorage.setItem( 'LOGGEDIN_ROLE',     data[ 'ROLE' ] );
+                localStorage.setItem( 'LOGGEDIN_TOKEN',    data[ 'TOKEN' ] );
+                _this.props.history.push( '/' );
             }
         } );
     }
 
     componentWillMount () {
-        let uid    = localStorage.getItem( 'LOGGEDIN_ID'       );
+        let uid    = this.props.loggedIn[ 'ID' ] || localStorage.getItem( 'LOGGEDIN_ID' );
 
         if ( uid ) {
             this.props.history.push( '/' );
@@ -133,25 +115,6 @@ class Register extends Component {
                     component="register"
                 />
                 <br />
-                <DataField type="text"   
-                    name="REPEATPW" id={ 'NEW' } 
-                    value={ this.state.REPEATPW } 
-                    onInputChange={ this.onInputChange } 
-                    handleOnClick={ this.handleOnClick }
-                    handleCloseField={ this.handleCloseField }
-                    component="register"
-                />
-                <br />
-                <DataField type="text"   
-                    name="NAME"     
-                    id={ 'NEW' } 
-                    value={ this.state.NAME     } 
-                    onInputChange={ this.onInputChange } 
-                    handleOnClick={ this.handleOnClick }
-                    handleCloseField={ this.handleCloseField }
-                    component="register"
-                />
-            <br />
                 <span className="submRegister">
                     <DataField type="submit" 
                         name="submit" 
@@ -165,4 +128,4 @@ class Register extends Component {
     }
 }
 
-export default withRouter( Register ) ;
+export default withRouter( Login ) ;
