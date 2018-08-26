@@ -2,3 +2,4 @@ server/MyLoc/lib/Db/test.db
 server/MyLoc/sessions*
 **.swp
 **lib/Db/test.db
+**/**.swp

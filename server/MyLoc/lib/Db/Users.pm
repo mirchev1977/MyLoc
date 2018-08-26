@@ -1,5 +1,4 @@
-
-package Db::Db;
+package Db::Users;
 use strict;
 use warnings;
 
