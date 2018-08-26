@@ -24,7 +24,6 @@ class Register extends Component {
         this.handleOnClick     = this.handleOnClick.bind(  this );
         this.handleCloseField  = this.handleCloseField.bind(  this );
         this.submitChanges = this.submitChanges.bind( this );
-        //this.handleDelete  = this.handleDelete.bind(  this );
     }
 
     onInputChange ( id, name, value ) {
@@ -100,6 +99,14 @@ class Register extends Component {
                 }
             }
         } );
+    }
+
+    componentWillMount () {
+        let uid    = localStorage.getItem( 'LOGGEDIN_ID'       );
+
+        if ( uid ) {
+            this.props.history.push( '/' );
+        }
     }
 
     render () {
