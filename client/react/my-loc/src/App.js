@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import './App.css';
 import { withRouter } from 'react-router';
 import Header from './components/common/Header.js';
@@ -41,7 +41,6 @@ class App extends Component {
         this.printError      = this.printError.bind( this );
         this.handleRegister  = this.handleRegister.bind( this );
         this.checkLoggedIn   = this.checkLoggedIn.bind( this );
-        this.checkIfLoggedIn = this.checkIfLoggedIn.bind( this );
     };
 
     update ( component, property, data ) {
@@ -189,6 +188,11 @@ class App extends Component {
     }
 
     componentDidMount () {
+
+        this.checkLoggedIn();
+    }
+
+    checkLoggedIn () {
         let uid    = localStorage.getItem( 'LOGGEDIN_ID'       );
         let uname  = localStorage.getItem( 'LOGGEDIN_NAME'     );
         let urole  = localStorage.getItem( 'LOGGEDIN_ROLE'    );
@@ -208,10 +212,6 @@ class App extends Component {
 
         let user_json = JSON.stringify( user );
 
-        this.checkLoggedIn( user_json, user );
-    }
-
-    checkLoggedIn ( user_json, user ) {
         let _this = this;
         $.ajax( {
             method: 'POST',
@@ -235,14 +235,6 @@ class App extends Component {
         });
     } 
 
-    checkIfLoggedIn ( callback ) {
-        if ( this.state.common.loggedIn[ 'ID' ] ) {
-            callback( true );
-        } else {
-            callback( false );
-        }
-    }
-
     render() {
       return (
         <div className="App">
@@ -258,11 +250,10 @@ class App extends Component {
             /> } />
             <Route path='/users/register' render={
                 () => <Register 
-                printError={ this.printError } 
-                handleRegister={ this.handleRegister } 
-                setCookie={ this.setCookie }
-                checkIfLoggedIn={ this.checkIfLoggedIn }
-            /> } />
+                    printError={ this.printError } 
+                    handleRegister={ this.handleRegister } 
+                    /> 
+            } />
         </div>
       );
     }

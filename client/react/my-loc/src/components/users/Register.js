@@ -102,13 +102,6 @@ class Register extends Component {
         } );
     }
 
-    componentWillMount() {
-        let _this = this;
-        this.props.checkIfLoggedIn( function ( data ) {
-            if ( data ) _this.props.history.push( '/' );
-        } );
-    }
-
     render () {
         return (
             <div className="register">
