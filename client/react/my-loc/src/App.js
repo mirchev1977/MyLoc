@@ -194,7 +194,8 @@ class App extends Component {
             }
 
             msg += deleted.join( ', ' );
-            state.deleted = msg;
+            this.printInfo( msg );
+            
 
             return state;
         } );
