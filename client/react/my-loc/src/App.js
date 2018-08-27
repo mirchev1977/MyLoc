@@ -31,17 +31,7 @@ class App extends Component {
                 _delete: {},
             },
             places: {
-                _places: { 
-                    0: { ID: 0, CATEGORY: 'NEW', CITY: 'NEW', ADDRESS: 'Some new address', PUBLIC: 'YES', 
-                    TOVISIT: 0, LATLNG: '', NOTES: 'Some notes here...', PIC: 'https://tinyurl.com/y9msaz6e', 
-                        USERID: 1 }, 
-                    1: { ID: 1, CATEGORY: 'Cinema', CITY: 'Sofia', ADDRESS: 'Some address in Sofia', PUBLIC: 'YES', 
-                    TOVISIT: 0, LATLNG: '42.6980274 , 23.323468', NOTES: 'Some notes here...', PIC: 'https://tinyurl.com/y94zpxvk ', USERID: 1 }, 
-                    2: { ID: 2, CATEGORY: 'Theater', CITY: 'Plovdiv', ADDRESS: 'Some address in Plovdiv', PUBLIC: 'YES', 
-                    TOVISIT: 0, LATLNG: '42.1468899 , 24.7488805', NOTES: 'Some notes here...', PIC: 'https://tinyurl.com/y792z4y2', USERID: 1 }, 
-                    3: { ID: 3, CATEGORY: 'Car Service', CITY: 'Varna', ADDRESS: 'Some address in Varna', PUBLIC: 'YES', 
-                    TOVISIT: 0, LATLNG: '43.2263393 , 27.8602098', NOTES: 'Some notes here...', PIC: 'https://tinyurl.com/ybpgm2n8', USERID: 1 }, 
-                }, 
+                _places: {}, 
                 _changed: {},
                 _placesChanges: false,
                 _saved: true,
@@ -304,6 +294,7 @@ class App extends Component {
                     places={ this.state.places }
                     confirmChanges={ this.placesConfirmChanges }
                     placesChanges={ this.state.places._placesChanges }
+                    update={ this.update }
                     onInputChange={ this.onInputChange } /> } />
         </div>
       );
