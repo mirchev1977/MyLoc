@@ -17,19 +17,30 @@ export class GMap extends Component {
     }
 
     componentWillMount () {
-        if ( window.navigator.geolocation ) {
-            window.navigator.geolocation.getCurrentPosition( ( position ) => {
-                let coords = position.coords;
-                this.setState( prevState => {
-                    let state = this.state;
-                    state.currentPos[ 'lat' ] = coords.latitude;
-                    state.currentPos[ 'lng' ] = coords.longitude;
-                    this.props.updatePosition( state.currentPos );
-
-                    return state;
-                } );
+        if ( this.props.latlng ) {
+            let arr = this.props.latlng.split( /\s*,\s*/ )
+            arr[ 0 ] = parseFloat( arr[ 0 ].trim() );
+            arr[ 1 ] = parseFloat( arr[ 1 ].trim() );
+            this.setState( prevState => {
+                let state = this.state;
+                state.currentPos.lat = arr[ 0 ];
+                state.currentPos.lng = arr[ 1 ];
             } );
-        }
+        } else {
+            if ( window.navigator.geolocation ) {
+                window.navigator.geolocation.getCurrentPosition( ( position ) => {
+                    let coords = position.coords;
+                    this.setState( prevState => {
+                        let state = this.state;
+                        state.currentPos[ 'lat' ] = coords.latitude;
+                        state.currentPos[ 'lng' ] = coords.longitude;
+                        this.props.updatePosition( state.currentPos );
+
+                        return state;
+                    } );
+                } );
+            }
+        } 
     }
 
     onMarkerClick = (props, marker, e) => {

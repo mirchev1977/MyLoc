@@ -272,6 +272,10 @@ div {
     font-weight: normal;
 }
 
+.newPlace {
+    background-color: yellow;
+}
+
 
 
 @keyframes App-logo-spin {

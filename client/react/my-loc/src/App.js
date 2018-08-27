@@ -272,7 +272,7 @@ class App extends Component {
             <Route path='/logout' render={
                 () => <Logout logout={ this.logout } /> } />
             <Route path='/myplaces' render={
-                () => <AllPlaces /> } />
+                () => <AllPlaces common={ this.state.common } /> } />
         </div>
       );
     }

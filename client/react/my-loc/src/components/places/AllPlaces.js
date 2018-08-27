@@ -7,6 +7,9 @@ class AllPlaces extends Component {
         super( props );
         this.state = {
             places: { 
+                0: { ID: 0, CATEGORY: 'NEW', CITY: 'NEW', ADDRESS: 'Some new address', PUBLIC: 'YES', 
+                TOVISIT: 0, LATLNG: '', NOTES: 'Some notes here...', PIC: 'https://tinyurl.com/y94zpxvk ', 
+                    USERID: this.props.common.loggedIn.ID }, 
                 1: { ID: 1, CATEGORY: 'Cinema', CITY: 'Sofia', ADDRESS: 'Some address in Sofia', PUBLIC: 'YES', 
                 TOVISIT: 0, LATLNG: '42.6980274 , 23.323468', NOTES: 'Some notes here...', PIC: 'https://tinyurl.com/y94zpxvk ', USERID: 1 }, 
                 2: { ID: 1, CATEGORY: 'Theater', CITY: 'Plovdiv', ADDRESS: 'Some address in Plovdiv', PUBLIC: 'YES', 
@@ -30,7 +33,7 @@ class AllPlaces extends Component {
                 latlng={pl.LATLNG}  
                 notes={pl.NOTES}  
                 pic={pl.PIC}  
-                USERID={pl.USERID}  
+                userid={pl.USERID}  
             />
 
                 allPlaces.push( current );
@@ -43,6 +46,7 @@ class AllPlaces extends Component {
                     <p>City</p>
                     <p className="longer">Address</p>
                 </div>
+                <button>There are some changes in your places' info. Please, confirm them them!</button>
                 <div className="placeFields">
                     { allPlaces }
                 </div>

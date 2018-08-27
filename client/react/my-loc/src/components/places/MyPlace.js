@@ -47,20 +47,14 @@ class MyPlace extends Component {
     }
 
     render() {
-        //let arr = this.props.latlng.split( /\s*,\s*/ )
-        //arr[ 0 ] = parseFloat( arr[ 0 ].trim() );
-        //arr[ 1 ] = parseFloat( arr[ 1 ].trim() );
-        //this.setState( prevState => {
-        //    let state = this.state;
-        //    state.currentPos.lat = arr[ 0 ];
-        //    state.currentPos.lng = arr[ 1 ];
-        //} );
-
         this.placeViewClosed = (<div className="placeContent">
             <p>{this.props.category}</p>
             <p>{ this.props.city }</p>
             <p className="longer">{ this.props.address }</p>
             </div>);
+        if ( this.props.id === 0 ) {
+            this.placeViewClosed = <div className="newPlace">{ this.placeViewClosed }</div>;
+        }
         this.placeViewOpened = ( 
             <div className="placeContent">
                 <div className="placeViewOpened">
@@ -130,7 +124,7 @@ class MyPlace extends Component {
                         /></span>
                     </div>
                     <div className="column mapHolder" id="mapHolder" onClick={ this.mapHolderClick }>
-                        <GMap updatePosition={ this.updatePosition } />
+                        <GMap updatePosition={ this.updatePosition } latlng={ this.props.latlng } />
                     </div>
                 </div>
             </div> 
