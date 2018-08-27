@@ -74,7 +74,7 @@ class MyPlace extends Component {
         super( props );
 
         this.state = {
-            viewOpened: false,
+            viewOpened: true,
         };
 
         this.openView           = this.openView.bind(           this );
@@ -99,6 +99,10 @@ class MyPlace extends Component {
 
     componentDidMount () {
         this.toggleOpenedClosed();
+    }
+
+    componentWillMount () {
+        this.placeView = this.placeViewClosed;
     }
 
     toggleOpenedClosed () {
