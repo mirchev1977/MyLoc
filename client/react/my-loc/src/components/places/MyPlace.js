@@ -126,7 +126,7 @@ class MyPlace extends Component {
                         <img alt="embedded img" src={ this.props.pic } />
                        <span className="picSrc">Picture: <DataField
                             type="text"
-                            name="picture"
+                            name="pic"
                             id={this.props.id }
                             value={ this.props.pic }
                             component="myplace"
