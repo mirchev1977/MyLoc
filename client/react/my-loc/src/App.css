@@ -281,6 +281,12 @@ div {
     min-height: 30px;
 }
 
+.changedPlaces {
+    height: 40px;
+    background-color: red;
+    border-radius: 5px;
+}
+
 
 
 @keyframes App-logo-spin {

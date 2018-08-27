@@ -17,6 +17,7 @@ class AllPlaces extends Component {
                 3: { ID: 3, CATEGORY: 'Car Service', CITY: 'Varna', ADDRESS: 'Some address in Varna', PUBLIC: 'YES', 
                 TOVISIT: 0, LATLNG: '43.2263393 , 27.8602098', NOTES: 'Some notes here...', PIC: 'https://tinyurl.com/ybpgm2n8', USERID: 1 }, 
             }, 
+            placeChanges: false,
         };
     }
 
@@ -26,6 +27,7 @@ class AllPlaces extends Component {
             let state = this.state;
 
             state[ 'places' ][ id ][ name_ ] = val;
+            state[ 'placeChanges' ] = true;
 
             return state;
         } );
@@ -36,11 +38,15 @@ class AllPlaces extends Component {
             let latlngStr = latlng.lat + ' , ' + latlng.lng;
             let state = this.state;
             state[ 'places' ][ id ][ 'LATLNG' ] = latlngStr;
+
+            state[ 'placeChanges' ] = true;
             return state;
         } );
     }
 
     render() {
+        let confirmButton = <button className="changedPlaces">There are some changes in your places info. Please, confirm  them!</button>;
+            confirmButton = this.state.placeChanges ? confirmButton : '';
         let allPlaces = [];
         $.each( this.state.places, ( i, pl ) => {
             let current = <MyPlace 
@@ -70,7 +76,7 @@ class AllPlaces extends Component {
                     <p>City</p>
                     <p className="longer">Address</p>
                 </div>
-                <button>There are some changes in your places' info. Please, confirm  them!</button>
+                { confirmButton }
                 <div className="placeFields">
                     { allPlaces }
                 </div>
