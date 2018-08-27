@@ -8,7 +8,7 @@ class AllPlaces extends Component {
         this.state = {
             places: { 
                 0: { ID: 0, CATEGORY: 'NEW', CITY: 'NEW', ADDRESS: 'Some new address', PUBLIC: 'YES', 
-                TOVISIT: 0, LATLNG: '', NOTES: 'Some notes here...', PIC: 'https://tinyurl.com/y94zpxvk ', 
+                TOVISIT: 0, LATLNG: '', NOTES: 'Some notes here...', PIC: 'https://tinyurl.com/y9msaz6e', 
                     USERID: this.props.common.loggedIn.ID }, 
                 1: { ID: 1, CATEGORY: 'Cinema', CITY: 'Sofia', ADDRESS: 'Some address in Sofia', PUBLIC: 'YES', 
                 TOVISIT: 0, LATLNG: '42.6980274 , 23.323468', NOTES: 'Some notes here...', PIC: 'https://tinyurl.com/y94zpxvk ', USERID: 1 }, 
@@ -44,8 +44,15 @@ class AllPlaces extends Component {
         } );
     }
 
+    confirmChanges = () => {
+        this.setState( {
+            placeChanges: false,
+        } );
+    }
+
     render() {
-        let confirmButton = <button className="changedPlaces">There are some changes in your places info. Please, confirm  them!</button>;
+        let confirmButton = <button className="changedPlaces"
+                onClick={ this.confirmChanges }>There are some changes in your places info. Please, confirm  them!</button>;
             confirmButton = this.state.placeChanges ? confirmButton : '';
         let allPlaces = [];
         $.each( this.state.places, ( i, pl ) => {
