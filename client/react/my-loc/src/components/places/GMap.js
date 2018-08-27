@@ -12,6 +12,21 @@ export class GMap extends Component {
         };
     }
 
+    componentWillMount () {
+        if ( window.navigator.geolocation ) {
+            window.navigator.geolocation.getCurrentPosition( ( position ) => {
+                let coords = position.coords;
+                this.setState( prevState => {
+                    let state = this.state;
+                    state.currentPos[ 'lat' ] = 42.7142092;
+                    state.currentPos[ 'lng' ] = 23.2730744;
+
+                    return state;
+                } );
+            } );
+        }
+    }
+
 
     render() {
         let currentPos = this.state.currentPos;
@@ -19,6 +34,7 @@ export class GMap extends Component {
             <Map 
             google={this.props.google} 
             initialCenter={ { lat: currentPos.lat, lng: currentPos.lng  } }
+            center={ { lat: currentPos.lat, lng: currentPos.lng  } }
             zoom={15}></Map>
         );
     }
