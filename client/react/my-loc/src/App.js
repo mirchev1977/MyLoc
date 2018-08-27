@@ -69,6 +69,9 @@ class App extends Component {
             place[ 'TODELETE' ] = 1;
             state[ 'places' ][ '_places' ][ id ] = place;
             state[ 'places' ][ '_changed' ][ id ] = place;
+
+            let deletedStr = "Deleted a place with id: " + id + '. ';
+            this.printInfo( deletedStr );
             return state;
         } );
     }
@@ -198,7 +201,20 @@ class App extends Component {
     }
 
     printError ( msg ) {
-        msg = 'Error: ' + msg;
+        msg = 'Info: ' + msg;
+        this.setState( {
+            error: msg,
+        } );
+
+        setTimeout( () => {
+            this.setState( {
+                error: '',
+            } );
+        }, 10000 );
+    }
+
+    printInfo = ( msg ) => {
+        msg = 'Info: ' + msg;
         this.setState( {
             error: msg,
         } );
