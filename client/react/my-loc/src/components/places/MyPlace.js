@@ -64,6 +64,8 @@ class MyPlace extends Component {
                             name="category"
                             id={ this.props.id }
                             value={ this.props.category }
+                            component="myplace"
+                            onInputChange={ this.props.onInputChange }
                         />
                         <br />
                         <br />
@@ -72,6 +74,8 @@ class MyPlace extends Component {
                             name="city"
                             id={ this.props.id }
                             value={ this.props.city }
+                            component="myplace"
+                            onInputChange={ this.props.onInputChange }
                         />
                         <br />
                         <br />
@@ -80,6 +84,8 @@ class MyPlace extends Component {
                             name="address"
                             id={ this.props.id }
                             value={ this.props.address }
+                            component="myplace"
+                            onInputChange={ this.props.onInputChange }
                         />
                     </div>
                     <div className="column">
@@ -88,6 +94,8 @@ class MyPlace extends Component {
                             name="public"
                             id={ this.props.id }
                             value={ this.props.public }
+                            component="myplace"
+                            onInputChange={ this.props.onInputChange }
                         />
                         <br />
                         <br />
@@ -99,6 +107,8 @@ class MyPlace extends Component {
                             name="latlng"
                             id={ this.props.id }
                             value={ this.props.latlng }
+                            component="myplace"
+                            onInputChange={ this.props.onInputChange }
                         />
                         <br />
                         <br />
@@ -107,6 +117,8 @@ class MyPlace extends Component {
                             name="notes"
                             id={ this.props.id }
                             value={ this.props.notes }
+                            component="myplace"
+                            onInputChange={ this.props.onInputChange }
                         />
                     </div>
                     <div className="column" onClick={ this.mapHolderClick }>
@@ -116,6 +128,8 @@ class MyPlace extends Component {
                             name="picture"
                             id="1"
                             value={ this.props.pic }
+                            component="myplace"
+                            onInputChange={ this.props.onInputChange }
                         /></span>
                     </div>
                     <div className="column mapHolder" id="mapHolder" onClick={ this.mapHolderClick }>
