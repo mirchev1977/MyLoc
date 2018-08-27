@@ -1,8 +1,40 @@
 import React, { Component } from 'react';
 import MyPlace from './MyPlace.js';
+import $ from 'jquery';
 
 class AllPlaces extends Component {
+    constructor( props ) {
+        super( props );
+        this.state = {
+            places: { 
+                1: { ID: 1, CATEGORY: 'Cinema', CITY: 'Sofia', ADDRESS: 'Some address in Sofia', PUBLIC: 'YES', 
+                TOVISIT: 0, LATLNG: '42.6980274 , 23.323468', NOTES: 'Some notes here...', PIC: 'https://tinyurl.com/y94zpxvk ', USERID: 1 }, 
+                2: { ID: 1, CATEGORY: 'Theater', CITY: 'Plovdiv', ADDRESS: 'Some address in Plovdiv', PUBLIC: 'YES', 
+                TOVISIT: 0, LATLNG: '42.1468899,24.7488805', NOTES: 'Some notes here...', PIC: 'https://tinyurl.com/y792z4y2', USERID: 1 }, 
+                3: { ID: 1, CATEGORY: 'Car Service', CITY: 'Varna', ADDRESS: 'Some address in Varna', PUBLIC: 'YES', 
+                TOVISIT: 0, LATLNG: '43.2263393 , 27.8602098', NOTES: 'Some notes here...', PIC: 'https://tinyurl.com/ybpgm2n8', USERID: 1 }, 
+            }, 
+        };
+    }
     render() {
+        let allPlaces = [];
+        $.each( this.state.places, ( i, pl ) => {
+            let current = <MyPlace 
+                key={ i }
+                id={pl.ID}
+                category={pl.CATEGORY}  
+                city={pl.CITY}  
+                address={pl.ADDRESS}  
+                public={pl.PUBLIC}  
+                tovisit={pl.TOVISIT}  
+                latlng={pl.LATLNG}  
+                notes={pl.NOTES}  
+                pic={pl.PIC}  
+                USERID={pl.USERID}  
+            />
+
+                allPlaces.push( current );
+        } );
         return(
             <div className="allPlaces">
                 <h1>All Places</h1>
@@ -12,9 +44,7 @@ class AllPlaces extends Component {
                     <p className="longer">Address</p>
                 </div>
                 <div className="placeFields">
-                    <MyPlace />
-                    <MyPlace />
-                    <MyPlace />
+                    { allPlaces }
                 </div>
             </div>
         );

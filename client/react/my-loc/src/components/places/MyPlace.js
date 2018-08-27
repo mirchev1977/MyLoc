@@ -47,10 +47,19 @@ class MyPlace extends Component {
     }
 
     render() {
+        //let arr = this.props.latlng.split( /\s*,\s*/ )
+        //arr[ 0 ] = parseFloat( arr[ 0 ].trim() );
+        //arr[ 1 ] = parseFloat( arr[ 1 ].trim() );
+        //this.setState( prevState => {
+        //    let state = this.state;
+        //    state.currentPos.lat = arr[ 0 ];
+        //    state.currentPos.lng = arr[ 1 ];
+        //} );
+
         this.placeViewClosed = (<div className="placeContent">
-            <p>Concert Hall</p>
-            <p>Sofia</p>
-            <p className="longer">Some Address in Sofia one two three four five six seven eight nine ten eleven twelve thirteen forteen</p>
+            <p>{this.props.category}</p>
+            <p>{ this.props.city }</p>
+            <p className="longer">{ this.props.address }</p>
             </div>);
         this.placeViewOpened = ( 
             <div className="placeContent">
@@ -59,65 +68,65 @@ class MyPlace extends Component {
                        Category: <DataField
                             type="text"
                             name="category"
-                            id="1"
-                            value="Cinema" 
+                            id={ this.props.id }
+                            value={ this.props.category }
                         />
                         <br />
                         <br />
                        City: <DataField
                             type="text"
                             name="city"
-                            id="1"
-                            value="Sofia" 
+                            id={ this.props.id }
+                            value={ this.props.city }
                         />
                         <br />
                         <br />
                        Address: <DataField
                             type="text"
                             name="address"
-                            id="1"
-                            value="Some very long address in Sofia one two three four five six seven eight" 
+                            id={ this.props.id }
+                            value={ this.props.address }
                         />
                     </div>
                     <div className="column">
                        Public: <DataField
                             type="text"
-                            name="category"
-                            id="1"
-                            value="Cinema" 
+                            name="public"
+                            id={ this.props.id }
+                            value={ this.props.public }
                         />
                         <br />
                         <br />
                        To Visit: <DataField
                             type="text"
-                            name="city"
-                            id="1"
-                            value="Sofia" 
+                            name="tovisit"
+                            id={ this.props.id }
+                            value={ this.props.tovisit }
                         />
                         <br />
                         <br />
                        LatLng: <DataField
                             type="text"
                             name="latlng"
-                            id="1"
-                            value={ this.state.currentPos.lat + ' , ' + this.state.currentPos.lng }
+                            id={ this.props.id }
+                            value={ this.props.latlng }
                         />
                         <br />
                         <br />
                        Notes: <DataField
                             type="text"
                             name="notes"
-                            id="1"
-                            value="my very long notes come here..."
+                            id={ this.props.id }
+                            value={ this.props.notes }
                         />
                     </div>
                     <div className="column" onClick={ this.mapHolderClick }>
-                        <img alt="embedded img" src="https://eltecenglish.files.wordpress.com/2018/02/holidays-ielts-essay.jpg?w=1300" />
+                        <img alt="embedded img" src={ this.props.pic } />
                        <span className="picSrc">Picture: <DataField
                             type="text"
                             name="picture"
                             id="1"
-                            value="Picturesrconeverylongimageisembeddedhereonetwothreefourfivexsixseveneightnineteneleventwelve" 
+                            value={ this.props.pic }
                         /></span>
                     </div>
                     <div className="column mapHolder" id="mapHolder" onClick={ this.mapHolderClick }>
