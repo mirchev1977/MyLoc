@@ -63,7 +63,7 @@ class App extends Component {
     }
 
     onInputChange ( component, property, id, name, data ) {
-        if ( name && data ) {
+        if ( name && ( data || data === 0 ) ) {
             this.setState( prevState => {
                 let hash = this.state[ component ][ property ];
                 hash[ id ][ name ] = data;

@@ -50,7 +50,8 @@ class MyPlace extends Component {
     checkBox = ( event ) => {
         event.stopPropagation();
         let val = event.target.checked ? 1 : 0;
-        this.props.onInputChange ( event.target.id, event.target.name, val );
+        let name = event.target.name.toUpperCase();
+        this.props.onInputChange ( event.target.id, name, val );
     }
 
     render() {
