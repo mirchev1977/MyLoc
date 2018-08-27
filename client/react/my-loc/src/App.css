@@ -230,7 +230,7 @@ div {
     background-color: red;
     min-width: 24%;
     max-width: 30%;
-    padding: 20px;
+    padding: 5px;
     display: inline-block;
     margin-left: 5px;
     vertical-align: top;
@@ -263,6 +263,13 @@ div {
     cursor: pointer;
     display: inline-block;
     padding: 5px;
+}
+
+.picSrc input, .picSrc .closedDataField{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-weight: normal;
 }
 
 

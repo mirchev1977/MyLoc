@@ -24,6 +24,7 @@ export class GMap extends Component {
                     let state = this.state;
                     state.currentPos[ 'lat' ] = coords.latitude;
                     state.currentPos[ 'lng' ] = coords.longitude;
+                    this.props.updatePosition( state.currentPos );
 
                     return state;
                 } );
@@ -54,6 +55,8 @@ export class GMap extends Component {
             let currPosStr = "The position you chose is the following(lat,lng):";
             currPosStr += lat + ',' + lng;
             state.infoText = currPosStr;
+
+            this.props.updatePosition( state.currentPos );
 
             return state;
         } );
