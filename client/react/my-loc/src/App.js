@@ -62,6 +62,17 @@ class App extends Component {
         } );
     }
 
+    deletePlace = ( id ) => {
+        this.setState( prevState => {
+            let state = this.state;
+            let place = state[ 'places' ][ '_places' ][ id ];
+            place[ 'TODELETE' ] = 1;
+            state[ 'places' ][ '_places' ][ id ] = place;
+            state[ 'places' ][ '_changed' ][ id ] = place;
+            return state;
+        } );
+    }
+
     onInputChange ( component, property, id, name, data ) {
         if ( name && ( data || data === 0 ) ) {
             this.setState( prevState => {
@@ -295,6 +306,7 @@ class App extends Component {
                     confirmChanges={ this.placesConfirmChanges }
                     placesChanges={ this.state.places._placesChanges }
                     update={ this.update }
+                    deletePlace={ this.deletePlace }
                     onInputChange={ this.onInputChange } /> } />
         </div>
       );

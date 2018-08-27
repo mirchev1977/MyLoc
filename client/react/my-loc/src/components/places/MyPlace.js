@@ -54,6 +54,11 @@ class MyPlace extends Component {
         this.props.onInputChange ( event.target.id, name, val );
     }
 
+    deletePlace = ( event ) => {
+        let id = this.props.id;
+        this.props.deletePlace( id );
+    }
+
     render() {
         this.placeViewClosed = (<div className="placeContent">
             <p>{this.props.category}</p>
@@ -95,6 +100,9 @@ class MyPlace extends Component {
                             component="myplace"
                             onInputChange={ this.props.onInputChange }
                         />
+                        <br />
+                        <br />
+                        <button className="deletePlace" onClick={ this.deletePlace }>Delete Place</button>
                     </div>
                     <div className="column">
                        Public: <DataField
