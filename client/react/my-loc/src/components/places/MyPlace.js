@@ -68,6 +68,9 @@ class MyPlace extends Component {
         if ( this.props.id === 0 ) {
             this.placeViewClosed = <div className="newPlace">{ this.placeViewClosed }</div>;
         }
+
+        let delBtn = this.props.id ? <button className="deletePlace" onClick={ this.deletePlace }>Delete Place</button> : '';
+
         this.placeViewOpened = ( 
             <div className="placeContent">
                 <div className="placeViewOpened">
@@ -102,7 +105,7 @@ class MyPlace extends Component {
                         />
                         <br />
                         <br />
-                        <button className="deletePlace" onClick={ this.deletePlace }>Delete Place</button>
+                        { delBtn }
                     </div>
                     <div className="column">
                        Public: <DataField
