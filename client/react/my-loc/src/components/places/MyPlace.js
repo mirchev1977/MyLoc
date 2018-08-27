@@ -91,12 +91,7 @@ class MyPlace extends Component {
                         />
                         <br />
                         <br />
-                       To Visit: <DataField
-                            type="text"
-                            name="tovisit"
-                            id={ this.props.id }
-                            value={ this.props.tovisit }
-                        />
+                       To visit: <input type="checkbox" name="tovisit" id={this.props.id } value={ this.props.tovisit }  />
                         <br />
                         <br />
                        LatLng: <DataField

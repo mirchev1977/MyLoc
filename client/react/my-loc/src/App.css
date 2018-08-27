@@ -215,6 +215,7 @@ div {
     background-color: green;
     border: none;
     min-width: 200px;
+    min-height: 25px;
 }
 
 .placeViewOpened .openedDataField {
@@ -274,6 +275,10 @@ div {
 
 .newPlace {
     background-color: yellow;
+}
+
+.newPlace .openedDataField, .newPlace .closedDataField {
+    min-height: 30px;
 }
 
 

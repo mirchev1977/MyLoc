@@ -46,7 +46,7 @@ class AllPlaces extends Component {
                     <p>City</p>
                     <p className="longer">Address</p>
                 </div>
-                <button>There are some changes in your places' info. Please, confirm them them!</button>
+                <button>There are some changes in your places' info. Please, confirm  them!</button>
                 <div className="placeFields">
                     { allPlaces }
                 </div>
