@@ -244,7 +244,20 @@ div {
     min-width: 90%;
     max-width: 93%;
     margin: 5px 0;
+    position: relative;
+    height: 300px;
+    text-align: center;
 }
+
+.mapHolder > div {
+    max-width: 100%;
+    min-width: 100%;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    position: relative;
+}
+
 
 
 @keyframes App-logo-spin {

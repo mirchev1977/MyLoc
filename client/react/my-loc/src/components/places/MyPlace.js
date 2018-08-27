@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import DataField from '../common/DataField.js';
+import $ from 'jquery';
 
 class MyPlace extends Component {
     placeViewClosed = (<div className="placeContent">
@@ -58,10 +59,10 @@ class MyPlace extends Component {
                         value="Picture src" 
                     />
                 </div>
-                <div className="column">
+                <div className="column" onClick={ this.mapHolderClick }>
                     <img src="https://eltecenglish.files.wordpress.com/2018/02/holidays-ielts-essay.jpg?w=1300" />
                 </div>
-                <div className="column mapHolder" id="mapHolder">
+                <div className="column mapHolder" id="mapHolder" onClick={ this.mapHolderClick }>
                 </div>
             </div>
         </div> 
@@ -78,12 +79,18 @@ class MyPlace extends Component {
 
         this.openView           = this.openView.bind(           this );
         this.toggleOpenedClosed = this.toggleOpenedClosed.bind( this );
+        this.mapHolderClick     = this.mapHolderClick.bind( this );
+    }
+
+    mapHolderClick( event ) {
+        event.stopPropagation();
     }
 
     openView ( event ) {
         if ( event.target.className === 'closedDataField' ) {
             return;
         }
+
         this.setState( {
             viewOpened: !this.state.viewOpened
         } );
@@ -98,8 +105,8 @@ class MyPlace extends Component {
         if ( this.state.viewOpened ) {
             this.placeView = this.placeViewOpened;
         } else {
-            //this.placeView = this.placeViewClosed;
-            this.placeView = this.placeViewOpened;
+            this.placeView = this.placeViewClosed;
+            //this.placeView = this.placeViewOpened;
         }
     }
 
