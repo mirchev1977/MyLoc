@@ -47,6 +47,12 @@ class MyPlace extends Component {
         } );
     }
 
+    checkBox = ( event ) => {
+        event.stopPropagation();
+        let val = event.target.checked ? 1 : 0;
+        this.props.onInputChange ( event.target.id, event.target.name, val );
+    }
+
     render() {
         this.placeViewClosed = (<div className="placeContent">
             <p>{this.props.category}</p>
@@ -100,7 +106,8 @@ class MyPlace extends Component {
                         />
                         <br />
                         <br />
-                       To visit: <input type="checkbox" name="tovisit" id={this.props.id } value={ this.props.tovisit }  />
+                       To visit: <input type="checkbox" name="tovisit" id={this.props.id } 
+                            checked={ this.props.tovisit } value={ this.props.tovisit } onClick={ this.checkBox }  />
                         <br />
                         <br />
                        LatLng: <DataField
