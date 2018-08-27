@@ -258,6 +258,13 @@ div {
     position: relative;
 }
 
+.positionOptions li {
+    text-decoration: underline;
+    cursor: pointer;
+    display: inline-block;
+    padding: 5px;
+}
+
 
 
 @keyframes App-logo-spin {

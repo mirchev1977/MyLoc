@@ -9,6 +9,10 @@ export class GMap extends Component {
                 lat: 42.6980274,
                 lng: 23.323468,
             },
+            showingInfoWindow: false,
+            activeMarker: {},
+            selectedPlace: {},
+            infoText: "Your current position",
         };
     }
 
@@ -18,8 +22,8 @@ export class GMap extends Component {
                 let coords = position.coords;
                 this.setState( prevState => {
                     let state = this.state;
-                    state.currentPos[ 'lat' ] = 42.7142092;
-                    state.currentPos[ 'lng' ] = 23.2730744;
+                    state.currentPos[ 'lat' ] = coords.latitude;
+                    state.currentPos[ 'lng' ] = coords.longitude;
 
                     return state;
                 } );
@@ -27,15 +31,57 @@ export class GMap extends Component {
         }
     }
 
+    onMarkerClick = (props, marker, e) => {
+        this.setState({
+          selectedPlace: props,
+          activeMarker: marker,
+          showingInfoWindow: true
+        });
+    }
+
+    onMarkerDrop = ( props, marker, event ) => {
+        let lat = marker.position.lat();
+        let lng = marker.position.lng();
+
+        this.setState( prevState => {
+            let state = this.state;
+            state.currentPos[ 'lat' ] = lat;
+            state.currentPos[ 'lng' ] = lng;
+            state.activeMarker = marker;
+            state.showingInfoWindow = true;
+
+
+            let currPosStr = "The position you chose is the following(lat,lng):";
+            currPosStr += lat + ',' + lng;
+            state.infoText = currPosStr;
+
+            return state;
+        } );
+    }
 
     render() {
-        let currentPos = this.state.currentPos;
         return(
             <Map 
             google={this.props.google} 
-            initialCenter={ { lat: currentPos.lat, lng: currentPos.lng  } }
-            center={ { lat: currentPos.lat, lng: currentPos.lng  } }
-            zoom={15}></Map>
+            initialCenter={ { lat: this.state.currentPos, lng: this.state.currentPos  }}
+            center={ { lat: this.state.currentPos, lat: this.state.currentPos  }}
+            zoom={15}>
+            <Marker
+                title={'Your Courrent Position Here'}
+                name={'My Position'}
+                draggable={ true }
+                onClick={this.onMarkerClick}
+                onDragend={ this.onMarkerDrop }
+                position={ { lat: this.state.currentPos, lng: this.state.currentPos  }} />
+
+            <InfoWindow
+              marker={this.state.activeMarker}
+              visible={this.state.showingInfoWindow} >
+                <div>
+                    { this.state.infoText }
+                </div>
+            </InfoWindow>
+            </Map>
         );
     }
 }

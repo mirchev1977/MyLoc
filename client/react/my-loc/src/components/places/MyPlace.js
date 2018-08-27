@@ -59,6 +59,14 @@ class MyPlace extends Component {
                         id="1"
                         value="Picture src" 
                     />
+                    <br />
+                    <br />
+                   LatLng: <DataField
+                        type="text"
+                        name="latlng"
+                        id="1"
+                        value="123,123" 
+                    />
                 </div>
                 <div className="column" onClick={ this.mapHolderClick }>
                     <img src="https://eltecenglish.files.wordpress.com/2018/02/holidays-ielts-essay.jpg?w=1300" />
