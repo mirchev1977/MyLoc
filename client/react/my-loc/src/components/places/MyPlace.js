@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import DataField from '../common/DataField.js';
+import GMap from './GMap.js';
 import $ from 'jquery';
 
 class MyPlace extends Component {
@@ -63,6 +64,7 @@ class MyPlace extends Component {
                     <img src="https://eltecenglish.files.wordpress.com/2018/02/holidays-ielts-essay.jpg?w=1300" />
                 </div>
                 <div className="column mapHolder" id="mapHolder" onClick={ this.mapHolderClick }>
+                    <GMap />
                 </div>
             </div>
         </div> 
@@ -75,6 +77,8 @@ class MyPlace extends Component {
 
         this.state = {
             viewOpened: true,
+            lat: '',
+            lng: '',
         };
 
         this.openView           = this.openView.bind(           this );
@@ -110,7 +114,7 @@ class MyPlace extends Component {
             this.placeView = this.placeViewOpened;
         } else {
             this.placeView = this.placeViewClosed;
-            //this.placeView = this.placeViewOpened;
+            this.placeView = this.placeViewOpened;
         }
     }
 
