@@ -28,6 +28,7 @@ class MyPlace extends Component {
         this.setState( prevState => {
             let state = this.state;
             state[ 'currentPos' ] = latLng;
+            this.props.updatePosition( this.props.id, state.currentPos );
             return state;
         } );
     }
@@ -126,14 +127,14 @@ class MyPlace extends Component {
                        <span className="picSrc">Picture: <DataField
                             type="text"
                             name="picture"
-                            id="1"
+                            id={this.props.id }
                             value={ this.props.pic }
                             component="myplace"
                             onInputChange={ this.props.onInputChange }
                         /></span>
                     </div>
                     <div className="column mapHolder" id="mapHolder" onClick={ this.mapHolderClick }>
-                        <GMap updatePosition={ this.updatePosition } latlng={ this.props.latlng } />
+                        <GMap updatePosition={ this.updatePosition } latlng={ this.props.latlng  } />
                     </div>
                 </div>
             </div> 
