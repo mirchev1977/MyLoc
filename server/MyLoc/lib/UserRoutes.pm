@@ -140,4 +140,34 @@ get '/places/all' => sub {
     return to_json $places;
 };
 
+post '/places/update' => sub {
+    my $places = body_parameters->get('places');
+    my $decoded =  decode_json( $places );
+
+    my $resp = { STAT => 'OK' };
+    for my $key ( keys %$decoded ) {
+        if ( $key <= 0 ) {
+            my $p = $decoded->{ $key };
+            my $nextId = Db::Places::get_next_id( 'PLACES' );
+            my $ok = Db::Places::insert_one_place(
+                $nextId, $p->{ 'CATEGORY' }, $p->{ 'CITY' },
+                $p->{ 'ADDRESS' }, $p->{ 'PUBLIC' }, 
+                $p->{ 'TOVISIT' }, $p->{ 'LATLNG' }, 
+                $p->{ 'NOTES' }, $p->{ 'PIC' }, $p->{ 'USERID' }
+            );
+        } elsif ( $decoded->{ $key }{ 'TODELETE' } ) {
+            Db::Places::delete_from_places( 'PLACES', $key );
+        } else {
+            my $place = { $key => $decoded->{ $key } };
+            Db::Places::update_places( $place );
+        }
+    }
+
+
+    header 'Access-Control-Allow-Origin' => '*';
+    content_type 'application/json';
+
+    return to_json $resp;
+};
+
 true;

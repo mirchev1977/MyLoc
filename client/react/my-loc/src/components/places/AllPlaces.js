@@ -33,14 +33,28 @@ class AllPlaces extends Component {
     }
 
     confirmChanges = () => {
-        this.props.confirmChanges();
+        let _this = this;
+        let changedPlaces = this.props.places[ '_changed' ];
+        let json = JSON.stringify( changedPlaces );
+        $.ajax( {
+            method: 'POST',
+            url: 'http://localhost:5000/places/update',
+            data: { places: json },
+            dataType: 'json',
+            success: function ( data ) {
+                _this.props.confirmChanges();
+            },
+            error: function ( data ) {
+            }
+        } );
     }
 
     componentDidMount () {
         let places = {};
+        let owner = this.props.common.loggedIn.ID || 1;
         let newPlace = { ID: 0, CATEGORY: 'NEW', CITY: 'NEW', ADDRESS: 'Some new address', PUBLIC: 'YES', 
             TOVISIT: 0, LATLNG: '', NOTES: 'Some notes here...', PIC: 'https://tinyurl.com/y9msaz6e', 
-                USERID: this.props.common.loggedIn.ID };
+                USERID: owner };
 
 
         let _this = this;
@@ -57,6 +71,7 @@ class AllPlaces extends Component {
                     places[ i ][ 'TODELETE' ] = 0;
                     places[ i ][ 'TOVISIT' ] = parseInt( places[ i ][ 'TOVISIT' ] );
                 }
+
                 _this.props.update ( 'places', '_places', places );
             }
         } );
