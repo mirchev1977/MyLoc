@@ -69,6 +69,7 @@ class App extends Component {
             place[ 'TODELETE' ] = 1;
             state[ 'places' ][ '_places' ][ id ] = place;
             state[ 'places' ][ '_changed' ][ id ] = place;
+            state[ 'places' ][ '_placesChanges' ] = true;
 
             let deletedStr = "Deleted a place with id: " + id + '. ';
             this.printInfo( deletedStr );
