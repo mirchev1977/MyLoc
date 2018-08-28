@@ -15,6 +15,7 @@ class Header extends Component {
         let loginLink;
         let logoutLink;
         let listAllUsersLink;
+        let myPlaces;
         if ( common.loggedIn[ 'ID' ] || localStorage.getItem( 'LOGGEDIN_ID' ) ) {
             let userName = common.loggedIn.USERNAME || localStorage.getItem( 'LOGGEDIN_USERNAME' );
             let role = common.loggedIn.ROLE || localStorage.getItem( 'LOGGEDIN_ROLE' );
@@ -23,6 +24,7 @@ class Header extends Component {
             if ( common.loggedIn[ 'ROLE' ] === 'ADMIN' || localStorage.getItem( 'LOGGEDIN_ROLE' ) === 'ADMIN') {
                 listAllUsersLink = <Link to='/users/all' className="header_link">List All Users</Link>
             }
+            myPlaces = <Link to='/myplaces' className="header_link">My Places</Link>;
         } else {
             registerLink = <Link to='/users/register' className="header_link">Register</Link>;
             loginLink    = <Link to='/users/login' className="header_link">Log In</Link>;
@@ -32,7 +34,7 @@ class Header extends Component {
                 <h1>Welcome to MyLoc</h1>
                 <h5>Keep all your places of interest here!</h5>
                 <Link to='/' className="header_link">Home</Link>
-                <Link to='/myplaces' className="header_link">My Places</Link>
+                { myPlaces }
                 { listAllUsersLink }
                 { registerLink }
                 { loginLink }

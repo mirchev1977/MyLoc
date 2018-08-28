@@ -95,7 +95,7 @@
     render () {
         return (
             <div className="register">
-                <h1>Register</h1>
+                <h1>Log in here...</h1>
                 <DataField type="text"   
                     name="USERNAME" 
                     id={ 'NEW' } 
