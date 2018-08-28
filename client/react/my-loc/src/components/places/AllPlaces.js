@@ -13,11 +13,13 @@ class AllPlaces extends Component {
     }
 
     onInputChange = ( id, name, val ) => {
+        if ( this.props.component.match( /public/i ) ) return;
         let name_ = name.toUpperCase();
         this.props.onInputChange ( 'places', '_places', id, name_, val );
     }
 
     updatePosition = ( id, latlng ) => {
+        if ( this.props.component.match( /public/i ) ) return;
         let latlngStr = latlng.lat + ' , ' + latlng.lng;
         this.props.onInputChange ( 'places', '_places', id, 'LATLNG', latlngStr );
         this.props.onInputChange ( 'places', '_placesChanges', id, '', latlngStr );
@@ -42,7 +44,7 @@ class AllPlaces extends Component {
             TOVISIT: 0, LATLNG: '43.2263393 , 27.8602098', NOTES: 'Some notes here...', PIC: 'https://tinyurl.com/ybpgm2n8', USERID: 1 }, 
         };
 
-        places[ newPlace.ID ] = newPlace;
+        if ( !this.props.component.match( /public/i ) ) places[ newPlace.ID ] = newPlace;
         for ( var i in fetchedPlaces ) {
             places[ i ] = fetchedPlaces[ i ];
             places[ i ][ 'TODELETE' ] = 0;
@@ -70,9 +72,15 @@ class AllPlaces extends Component {
 
         let allPlaces = [];
         $.each( places._places, ( i, pl ) => {
+            let isPublic = this.props.component.match( /public/i );
+            if ( isPublic ){
+                if ( !pl[ 'PUBLIC' ].match( /yes/i ) ) {
+                    return true;
+                }
+            }
             let placeUID = pl[ 'USERID' ];
             let loggedID = this.props.common.loggedIn.ID;
-            if ( placeUID && loggedID ) {
+            if ( placeUID && loggedID && !isPublic ) {
                 if ( placeUID.toString() !== loggedID.toString() ) {
                     return true;
                 }
@@ -119,6 +127,7 @@ class AllPlaces extends Component {
                 onInputChange={ this.onInputChange }
                 updatePosition={ this.updatePosition }
                 deletePlace={ this.props.deletePlace }
+                component={ this.props.component }
             />
 
                 allPlaces.push( current );

@@ -70,6 +70,8 @@ class MyPlace extends Component {
         }
 
         let delBtn = this.props.id ? <button className="deletePlace" onClick={ this.deletePlace }>Delete Place</button> : '';
+        if ( this.props.component.match( /public/i ) ) delBtn = '';
+
 
         this.placeViewOpened = ( 
             <div className="placeContent">

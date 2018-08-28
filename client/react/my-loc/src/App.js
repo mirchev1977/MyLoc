@@ -8,6 +8,7 @@ import Register from './components/users/Register.js';
 import Login from './components/users/LogIn.js';
 import Logout from './components/users/Logout.js';
 import AllPlaces from './components/places/AllPlaces.js';
+import Home      from './components/Home.js';
 import $ from 'jquery';
 
 
@@ -296,6 +297,17 @@ class App extends Component {
         <div className="App">
             <Header error={ this.state.error } deleted={ this.state.deleted } error={ this.state.error } 
                 common={ this.state.common } />
+            <Route path='/' exact render={
+                () => <AllPlaces 
+                        common={ this.state.common } 
+                        places={ this.state.places }
+                        confirmChanges={ this.placesConfirmChanges }
+                        placesChanges={ this.state.places._placesChanges }
+                        update={ this.update }
+                        deletePlace={ this.deletePlace }
+                        onInputChange={ this.onInputChange } 
+                        component="Home: Public Places"
+                    /> } />
             <Route path='/users/all' render={ 
                 () => <AllUsers 
                     users={ this.state.users }  
