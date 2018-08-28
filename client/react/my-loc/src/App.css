@@ -187,7 +187,6 @@ div {
 
 .placeHeader p, .placeContent p {
     display: inline-block;
-    width: 14%;
     text-align: center;
     margin-right: 5px;
     margin-left: 5px;
@@ -200,10 +199,6 @@ div {
     white-space: nowrap;
     overflow: hidden;
     font-weight: normal;
-}
-
-.placeHeader p.longer, .placeContent p.longer {
-    width: 65%;
 }
 
 .placeContent .placeViewOpened {
@@ -224,7 +219,7 @@ div {
 }
 
 .placeFields {
-    padding-top: 10px;
+    padding-top: 40px;
 }
 
 .placeViewOpened .column {
@@ -285,10 +280,34 @@ div {
     height: 40px;
     background-color: red;
     border-radius: 5px;
+    margin-top: 40px;
 }
 
 .deletePlace {
     width: 100%;
+}
+
+.headerRow {
+    display: inline-block;
+    width: 14%;
+    text-align: center;
+}
+
+.headerRow.longer, .placeContent p.longer {
+    width: 65%;
+}
+
+.placeContent p {
+    width: 14%;
+}
+
+.headerRow span {
+    display: inline-block;
+    width: 100%;
+}
+
+.headerRow span input {
+    width: 90%;
 }
 
 

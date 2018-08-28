@@ -6,6 +6,9 @@ class AllPlaces extends Component {
     constructor( props ) {
         super( props );
         this.state = {
+            catFil: '',
+            cityFil: '',
+            addrFil: '',
         };
     }
 
@@ -47,6 +50,17 @@ class AllPlaces extends Component {
         this.props.update ( 'places', '_places', places );
     }
 
+    handleKeyPress = ( event )  => {
+        let name = event.target.name;
+        if ( name === 'filterCateg' ) {
+            this.setState( { catFil: event.target.value } );
+        } else if ( name === 'filterCity' ) {
+            this.setState( { cityFil: event.target.value } );
+        } else if ( name === 'filterAddr' ) {
+            this.setState( { addrFil: event.target.value } );
+        }
+    }
+
     render() {
         let places = this.props.places;
 
@@ -56,6 +70,30 @@ class AllPlaces extends Component {
 
         let allPlaces = [];
         $.each( places._places, ( i, pl ) => {
+            if ( this.state.catFil.length > 0 ) {
+                let searchTerm = this.state.catFil;
+                searchTerm = searchTerm.toLowerCase();
+                let item = pl[ 'CATEGORY' ].toLowerCase();
+                if ( !item.match( searchTerm ) ) {
+                    return true;
+                }
+            }
+            if ( this.state.cityFil.length > 0 ) {
+                let searchTerm = this.state.cityFil;
+                searchTerm = searchTerm.toLowerCase();
+                let item = pl[ 'CITY' ].toLowerCase();
+                if ( !item.match( searchTerm ) ) {
+                    return true;
+                }
+            }
+            if ( this.state.addrFil.length > 0 ) {
+                let searchTerm = this.state.addrFil;
+                searchTerm = searchTerm.toLowerCase();
+                let item = pl[ 'ADDRESS' ].toLowerCase();
+                if ( !item.match( searchTerm ) ) {
+                    return true;
+                }
+            }
             if ( pl.TODELETE ) return true;
             let current = <MyPlace 
                 key={ i }
@@ -81,9 +119,12 @@ class AllPlaces extends Component {
             <div className="allPlaces">
                 <h1>All Places</h1>
                 <div className="placeHeader">
-                    <p>Category</p>
-                    <p>City</p>
-                    <p className="longer">Address</p>
+                    <div className="headerRow"><p>Category</p><br />
+                        <span><input type="text" name="filterCateg" onKeyPress={ this.handleKeyPress } /></span><br /><br /></div>
+                    <div className="headerRow"><p>City</p><br />
+                        <span><input type="text" name="filterCity" onKeyPress={ this.handleKeyPress } /></span><br /><br /></div>
+                    <div className="headerRow longer"><p>Address</p><br />
+                        <span><input type="text" name="filterAddr" onKeyPress={ this.handleKeyPress } /></span><br /><br /></div>
                 </div>
                 { confirmButton }
                 <div className="placeFields">
