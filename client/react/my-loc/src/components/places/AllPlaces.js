@@ -13,7 +13,14 @@ class AllPlaces extends Component {
     }
 
     onInputChange = ( id, name, val ) => {
-        if ( this.props.component.match( /public/i ) ) return;
+        if ( this.props.component.match( /public/i ) ) {
+            if ( !this.props.common.loggedIn.ID ) {
+                return;
+            }
+            if ( !name.match( /tovisit/i ) ) {
+                return;
+            }
+        }
         let name_ = name.toUpperCase();
         this.props.onInputChange ( 'places', '_places', id, name_, val );
     }

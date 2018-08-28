@@ -8,7 +8,6 @@ import Register from './components/users/Register.js';
 import Login from './components/users/LogIn.js';
 import Logout from './components/users/Logout.js';
 import AllPlaces from './components/places/AllPlaces.js';
-import Home      from './components/Home.js';
 import $ from 'jquery';
 
 
