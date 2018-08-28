@@ -118,17 +118,23 @@ class AllPlaces extends Component {
         return(
             <div className="allPlaces">
                 <h1>All Places</h1>
-                <div className="placeHeader">
-                    <div className="headerRow"><p>Category</p><br />
-                        <span><input type="text" name="filterCateg" onKeyPress={ this.handleKeyPress } /></span><br /><br /></div>
-                    <div className="headerRow"><p>City</p><br />
-                        <span><input type="text" name="filterCity" onKeyPress={ this.handleKeyPress } /></span><br /><br /></div>
-                    <div className="headerRow longer"><p>Address</p><br />
-                        <span><input type="text" name="filterAddr" onKeyPress={ this.handleKeyPress } /></span><br /><br /></div>
-                </div>
-                { confirmButton }
-                <div className="placeFields">
-                    { allPlaces }
+                <div className="allPlacesContent">
+                    <div className="placeHeader">
+                        <div className="headerRow"><p>Category</p><br />
+                            <span><input type="text" name="filterCateg" onKeyPress={ this.handleKeyPress } /></span><br /><br /></div>
+                        <div className="headerRow"><p>City</p><br />
+                            <span><input type="text" name="filterCity" onKeyPress={ this.handleKeyPress } /></span><br /><br /></div>
+                        <div className="headerRow longer"><p>Address</p><br />
+                            <span><input type="text" name="filterAddr" onKeyPress={ this.handleKeyPress } /></span><br /><br /></div>
+                    </div>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    { confirmButton }
+                    <div className="placeFields">
+                        { allPlaces }
+                    </div>
                 </div>
             </div>
         );
