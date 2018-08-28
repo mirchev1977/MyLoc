@@ -145,7 +145,7 @@ class MyPlace extends Component {
                     </div>
                     <div className="column" onClick={ this.mapHolderClick }>
                         <img alt="embedded img" src={ this.props.pic } />
-                       <span className="picSrc">Picture: <DataField
+                       <span className="picSrc">Picture: <br /><DataField
                             type="text"
                             name="pic"
                             id={this.props.id }
