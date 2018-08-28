@@ -70,6 +70,14 @@ class AllPlaces extends Component {
 
         let allPlaces = [];
         $.each( places._places, ( i, pl ) => {
+            let placeUID = pl[ 'USERID' ];
+            let loggedID = this.props.common.loggedIn.ID;
+            if ( placeUID && loggedID ) {
+                if ( placeUID.toString() !== loggedID.toString() ) {
+                    return true;
+                }
+            }
+
             if ( this.state.catFil.length > 0 ) {
                 let searchTerm = this.state.catFil;
                 searchTerm = searchTerm.toLowerCase();
@@ -117,7 +125,7 @@ class AllPlaces extends Component {
         } );
         return(
             <div className="allPlaces">
-                <h1>All Places</h1>
+                <h1>{ this.props.component }</h1>
                 <div className="allPlacesContent">
                     <div className="placeHeader">
                         <div className="headerRow"><p>Category</p><br />

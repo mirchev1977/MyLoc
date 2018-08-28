@@ -318,13 +318,15 @@ class App extends Component {
                 () => <Logout logout={ this.logout } /> } />
             <Route path='/myplaces' render={
                 () => <AllPlaces 
-                    common={ this.state.common } 
-                    places={ this.state.places }
-                    confirmChanges={ this.placesConfirmChanges }
-                    placesChanges={ this.state.places._placesChanges }
-                    update={ this.update }
-                    deletePlace={ this.deletePlace }
-                    onInputChange={ this.onInputChange } /> } />
+                        common={ this.state.common } 
+                        places={ this.state.places }
+                        confirmChanges={ this.placesConfirmChanges }
+                        placesChanges={ this.state.places._placesChanges }
+                        update={ this.update }
+                        deletePlace={ this.deletePlace }
+                        onInputChange={ this.onInputChange } 
+                        component="My Places"
+                    /> } />
         </div>
       );
     }
