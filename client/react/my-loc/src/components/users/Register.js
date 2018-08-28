@@ -49,6 +49,10 @@ class Register extends Component {
         let state = this.state;
         let empty = false;
         for ( var i in state  ) {
+            if ( !state[ i ] ) {
+                this.props.printError( 'No empty fields allowed' );
+                break;
+            }
             let field = state[ i ].trim();
             let toRemove = i.toString().match( /^_/ );
 
