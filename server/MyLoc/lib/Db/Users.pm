@@ -10,7 +10,7 @@ use JSON;
 my $dbh;
 
 my %db = ( 
-    insert => sub { return 'started inserting in the database... lele male'; },
+    insert => sub { return 'started inserting in the database...'; },
 );
 
 sub get_db {
@@ -331,6 +331,7 @@ sub logout {
     my $sth  = $dbh->prepare( $stmt );
     my $rv   = $sth->execute( $token );
 }
+
 
 1;
  

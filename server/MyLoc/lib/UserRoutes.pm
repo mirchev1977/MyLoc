@@ -1,11 +1,13 @@
 package MyLoc;
 use Dancer2;
 use Db::Users;
+use Db::Places;
 use Data::Dumper;
 use Digest::MD5 qw(md5);
 
 our $VERSION = '0.1';
 my  $db_test = Db::Users::get_db();
+my  $db_places = Db::Places::get_db();
 
 
 get '/' => sub {
@@ -127,6 +129,15 @@ get '/service/route' => sub {
     #Db::Users::delete_from_users( 2 );
     #Db::Users::create_table_logged_in();
     "it is ok..."
+};
+
+get '/places/all' => sub {
+    my $places = Db::Places::fetch_places();
+
+    header 'Access-Control-Allow-Origin' => '*';
+    content_type 'application/json';
+
+    return to_json $places;
 };
 
 true;
