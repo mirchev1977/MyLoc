@@ -305,6 +305,10 @@ div {
     width: 90%;
 }
 
+.footer {
+    text-align: center;
+}
+
 
 
 @keyframes App-logo-spin {

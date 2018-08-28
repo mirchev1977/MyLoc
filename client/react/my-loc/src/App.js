@@ -8,6 +8,7 @@ import Register from './components/users/Register.js';
 import Login from './components/users/LogIn.js';
 import Logout from './components/users/Logout.js';
 import AllPlaces from './components/places/AllPlaces.js';
+import Footer from './components/common/Footer.js';
 import $ from 'jquery';
 
 
@@ -339,6 +340,7 @@ class App extends Component {
                         onInputChange={ this.onInputChange } 
                         component="My Places"
                     /> } />
+            <Footer />
         </div>
       );
     }
