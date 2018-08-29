@@ -35,6 +35,7 @@ class AllPlaces extends Component {
     confirmChanges = () => {
         let _this = this;
         let changedPlaces = this.props.places[ '_changed' ];
+
         let json = JSON.stringify( changedPlaces );
         $.ajax( {
             method: 'POST',
@@ -65,7 +66,10 @@ class AllPlaces extends Component {
             success: function ( data ) {
                 let fetchedPlaces = data;
 
-                if ( !_this.props.component.match( /public/i ) ) places[ newPlace.ID ] = newPlace;
+                if ( !_this.props.component.match( /public/i ) && owner && owner > 0 ) {
+                    places[ newPlace.ID ] = newPlace;
+                } 
+
                 for ( var i in fetchedPlaces ) {
                     places[ i ] = fetchedPlaces[ i ];
                     places[ i ][ 'TODELETE' ] = 0;

@@ -89,18 +89,12 @@ class App extends Component {
                 if ( component === 'places' ) {
                     state[ component ][ '_placesChanges' ] = true;
                 }
+
+                let ch = state[ component ][ '_places' ][ id ];
+                state[ component ][ '_changed' ][ id ] = ch;
                 return state;
             } );
         }
-
-        this.setState( prevState => {
-            let item = this.state[ component ][ property ][ id ];
-            let hash = this.state[ component ][ '_changed' ];
-            hash[ id ] = item;
-            let state = this.state;
-            state[ component ][ '_changed' ][ id ] = item;
-            return state;
-        } );
     }
 
     placesConfirmChanges = () => {
