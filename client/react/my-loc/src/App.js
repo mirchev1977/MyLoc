@@ -106,7 +106,8 @@ class App extends Component {
     placesConfirmChanges = () => {
         this.setState( prevState => {
             let state = this.state;
-            state[ 'places' ][ '_placesChanges' ] = false;;
+            state[ 'places' ][ '_placesChanges' ] = false;
+            state[ 'places' ][ '_changed' ] = {};
             return state;
         } );
     }
